@@ -90,7 +90,8 @@ def create(task, goal, plan, inputs, library=None, output_root=None, max_revisio
     gateway = module('command_gateway')
     gateway.validate_shape('lightcraft', plan)
     if type(max_revisions) is not int or not 0 <= max_revisions <= 20: raise ValueError('revision_limit_invalid')
-    originals = gateway.capture_inputs(inputs)
+    # 先按原输入拒绝文件链接，再统一父目录别名，避免 /tmp 与 /private/tmp 误判漂移。
+    originals = {str(Path(path).resolve()): sha for path, sha in gateway.capture_inputs(inputs).items()}
     gateway.preflight_writes(plan, originals, output_root)
     state = {'schemaVersion': 1, 'taskId': str(uuid.uuid4()), 'status': 'PLANNED',
              'goal': goal, 'goalSha256': digest(goal), 'plan': plan, 'planSha256': digest(plan),
@@ -130,7 +131,10 @@ def run(task, runtime_home=None):
         if state['outputRoot']: argv += ['--output-root', state['outputRoot']]
         for path in state['inputRoots']: argv += ['--input', path]
         # 子命令独占原生监督；控制器不添加竞争的超时，不根据退出码重放。
-        try: subprocess.run(argv, check=False)
+        try:
+            # 子包装器输出落盘，控制器 stdout 只返回一个状态 JSON，避免混入第二份回执。
+            with (runs/(run_dir.name+'.stdout.log')).open('wb') as stdout, (runs/(run_dir.name+'.stderr.log')).open('wb') as stderr:
+                subprocess.run(argv, check=False, stdout=stdout, stderr=stderr)
         except (OSError, KeyboardInterrupt) as error:
             state.update(status='UNKNOWN', controllerError=str(error)); save(task,state,'controller_interrupted'); return state
         if not Path(state['receiptPath']).is_file():

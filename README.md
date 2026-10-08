@@ -14,6 +14,6 @@ python3 -I -B scripts/controller.py --help
 
 输入 JSON、恢复与审阅交接见 [控制器操作契约](docs/controller.zh-CN.md)。
 
-主 OpenSpec 任务 **21/26** 完成，剩余宿主安装/发现、真实原生视觉闭环、发行身份、升级识别和最终跨项目验收保持 OPEN。没有宿主、原生、视觉通过证据；Git main 已推送，Python 3.11/3.12/3.13 远端离线 CI 全部通过；开发版发行草稿已准备，尚无公开发行。三个 P3 独立扩展变更保持 OPEN。
+主 OpenSpec 任务 **22/26** 完成，剩余宿主自然语言路由、发行身份、升级识别和最终跨项目验收保持 OPEN。已通过宿主安装/发现、缓存控制器原生闭环与合成图视觉审阅；自然语言路由仍受宿主兼容性阻塞；Git main 已推送，Python 3.11/3.12/3.13 远端离线 CI 全部通过；开发版发行草稿已准备，尚无公开发行。三个 P3 独立扩展变更保持 OPEN。
 
 [任务与规格](openspec/README.md) · [当前证据及差距](docs/verification/implementation-evidence.md) · [分层报告](docs/verification/local-report.json) · [架构](docs/architecture.md) · [回执与来源同步](docs/task-receipts.zh-CN.md)

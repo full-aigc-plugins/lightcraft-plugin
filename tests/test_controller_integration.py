@@ -1,7 +1,7 @@
 """控制器状态故障和上游回执集成；全部为 mock，不构成原生验收。"""
 import importlib.util,json
 from pathlib import Path
-import subprocess,tempfile,unittest
+import subprocess,tempfile,unittest,shutil,sys
 from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -15,6 +15,21 @@ class ControllerIntegration(unittest.TestCase):
         c=core();task=root/'task'
         c.create(task,{}, {'domain':'lightcraft','steps':[{'command':'library.info','params':{}}]},[])
         return c,task
+
+    def test_cli_stdout_remains_one_json_document_when_child_reports(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary);package=root/'plugin'
+            shutil.copytree(ROOT,package,ignore=shutil.ignore_patterns('.git','__pycache__'))
+            c,task=self.create(root)
+            child=package/'skills/lightcraft-use/scripts/commands.py'
+            child.write_text("print('{\"child\": true}')\n")
+            result=subprocess.run([sys.executable,'-I','-B',str(package/'scripts/controller.py'),'run',str(task)],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            state=json.loads(result.stdout)
+            self.assertEqual(state['status'],'UNKNOWN')
+            logs=list((task/'runs').glob('*.stdout.log'))
+            self.assertEqual(len(logs),1)
+            self.assertIn('child',logs[0].read_text())
 
     def test_unknown_and_not_saved_propagate_without_replay(self):
         for status in ['UNKNOWN','PERSISTENCE_UNCONFIRMED','FAILED_OR_PARTIAL']:

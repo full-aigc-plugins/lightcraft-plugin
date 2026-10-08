@@ -16,6 +16,17 @@ class TaskCore(unittest.TestCase):
         module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
         return module
 
+    def test_parent_path_alias_preserves_input_identity_after_create(self):
+        core = self.core()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / 'source'; source.mkdir()
+            photo = source / 'original.png'; photo.write_bytes(b'unchanged original')
+            alias = root / 'alias'; alias.symlink_to(source, target_is_directory=True)
+            state = core.create(root / 'task', {}, {'domain': 'lightcraft', 'steps': [{'command': 'library.info', 'params': {}}]}, [str(alias / photo.name)])
+            core.check_inputs(state)
+            self.assertEqual(set(state['originals']), {str(photo.resolve())})
+
     def test_existing_or_corrupt_task_is_not_reinitialized(self):
         core = self.core()
         with tempfile.TemporaryDirectory() as temporary:

@@ -25,7 +25,7 @@
 | P-4.1 | LOCAL_DONE | .codex-plugin/plugin.json, scripts/validate_package.py |
 | P-4.2 | LOCAL_DONE | .github/workflows/offline-contracts.yml, tests/, 配套技能库 tests/test_package.py；远端三个 Python 版本 CI 均通过，见 remote-ci.json |
 | P-4.3 | OPEN | .codex-plugin/plugin.json。宿主发现、加载、六技能路由和新缓存安装未授权/未运行。 |
-| P-4.4 | OPEN | scripts/controller.py, scripts/task_core.py；仅 mock 回归。固定制品在宿主中的原生与独立视觉闭环未运行。 |
+| P-4.4 | DONE | native-20261008/index.json、实际原生回执与宿主缓存控制器交付证据；仅该固定制品与合成样本范围。 |
 | P-4.5 | LOCAL_DONE | local-components.json；不添加 hooks，无自动安装或扫描 |
 | P-5.1 | LOCAL_DONE | 配套技能库 scripts/generate_runtime.py/scripts/sync_local_snapshot.py/tests/test_snapshot_sync.py, tests/test_snapshot.py |
 | P-5.2 | OPEN | scripts/provenance.py, scripts/release_preflight.py。未获 Git/远端/发布授权，无实际 tag/commit。 |
@@ -69,3 +69,7 @@
 - RAW 驱动按 previewOnly 的字符串/null 协议区分预览回退；不把布尔值或缺字段当作完整 RAW。核对回执、计划、资源、原片与独立重开持久化；回退单列 PASS_WITH_PREVIEW_FALLBACK，完整 RAW 保持 NOT_PROVEN。
 - 合成驱动逐一处理 PNG/JPEG 两个输入，记录前后预览和独立重开。以上驱动只完成模拟协议回归，真实原生任务仍 OPEN。
 - --require-installed 的缺失目录拒绝回归及已有安装替身包装链均无下载/安装；真实 CLI 仍未执行。
+
+## 2026-10-08 获授权后的真实验收
+
+证据见 [原生与宿主验收索引](native-20261008/index.json)。固定制品安装、PNG/JPEG 显影导出及独立重开通过；重复/损坏/缺失导入逐项报告，占用锁未强制解除，显式批量修改只影响指定 ID。缓存插件的控制器完成真实闭环、实际图像审阅和 delivery.json。Nikon D2H 完整 RAW 解码由运行时报告通过；Blackmagic DNG 为明确不支持，Canon EOS 7D sRAW 仅预览回退通过，Canon D30 CRW 不支持。自然语言路由未通过：Codex CLI 0.147.0 配置模型要求更新宿主，且现有技能列表超出上下文预算。加载六技能不代表路由通过；未升级 Codex，也未公开发行。

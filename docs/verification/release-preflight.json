@@ -1,10 +1,7 @@
 {
   "ready": false,
   "missing": [
-    "native",
     "host",
-    "visual",
-    "platform",
     "published_source_identity"
   ],
   "published": false,
