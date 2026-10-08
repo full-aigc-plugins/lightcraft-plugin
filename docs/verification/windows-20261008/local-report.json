@@ -34,9 +34,11 @@
       "evidence": []
     },
     "remoteCI": {
-      "status": "NOT_RUN",
-      "evidence": [],
-      "scope": "final evidence commit will be verified after push; bundled offline-ci.json is source-only"
+      "status": "PASS",
+      "evidence": [
+        "plugin-offline-ci.json"
+      ],
+      "scope": "plugin commit c2cc940; subsequent report-only commit leaves tested plugin code, snapshot and tests unchanged; source-only CI stored separately"
     }
   },
   "completeAcceptance": false,
