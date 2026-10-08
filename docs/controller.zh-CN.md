@@ -83,3 +83,13 @@ init payload 可提供 batch_scope：`{"targetIds":[2,3],"observedIds":[1,2,3],"
 批量 revise 的 scope 必须为 `{"targetIds":[3],"allowedFields":["light.exposure"]}`，且为初始合同子集；run 会重新校验。批量 review-request 的 settings 改为按照片 ID 的对象，例如 `{"2":完整实际设置,"3":完整实际设置}`，不能用单张设置替代整个批量。每张 target 的实际 photo.inspect 必须出现在独立重开回执中，并与审阅绑定的完整设置一致。
 
 该能力是显式 opt-in；旧任务不自动推导批量范围。实际测试见 [批量验收](verification/batch-20261008/README.md)。
+
+## RAW 逐样本结果观察
+
+```bash
+python3 -I -B scripts/controller.py raw-inspect /absolute/raw-evidence.json
+```
+
+入口只读核对 manifest、原片/目录条目、每次原生回执、相机身份、解码标记、设置重开和导出文件；不会下载、安装或启动 Lightcraft，图像技术检查可调用已有系统解码器。原始文件/回执不可用时，不能声明当前结果已验证。旧格式仅兼容只读历史，不能转换成执行许可。
+
+返回 taskExecutionAllowed=false、deliveryAllowed=false、automaticReplay=false。FULL_RAW_REPORTED 是固定运行时报告，PREVIEW_FALLBACK 不是完整 RAW；UNSUPPORTED 必须来自完整原生导入回执的明确错误，环境失败不能代替。结果只涵盖每个 make/model/variant/SHA256，不按扩展名或品牌泛化。sourceSnapshotMatches=false 只允许查看外来源事实，不代表已升级受保护快照。

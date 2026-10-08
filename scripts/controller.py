@@ -16,7 +16,7 @@ def read(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver','session-inspect'])
+    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver','session-inspect','raw-inspect'])
     parser.add_argument('task',type=Path)
     parser.add_argument('--payload',type=Path)
     parser.add_argument('--runtime-home',type=Path)
@@ -24,7 +24,12 @@ def main():
     try:
         payload=read(args.payload) if args.payload else {}
         action=args.action
-        if action=='session-inspect':
+        if action=='raw-inspect':
+            source=Path(__file__).with_name('raw_facts.py')
+            raw_spec=importlib.util.spec_from_file_location('raw_facts',source)
+            raw=importlib.util.module_from_spec(raw_spec);raw_spec.loader.exec_module(raw)
+            result=raw.inspect_raw(args.task)
+        elif action=='session-inspect':
             source=Path(__file__).with_name('session_facts.py')
             session_spec=importlib.util.spec_from_file_location('session_facts',source)
             session=importlib.util.module_from_spec(session_spec);session_spec.loader.exec_module(session)
