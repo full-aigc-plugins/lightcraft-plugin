@@ -14,8 +14,8 @@ def load(name):
     return result
 
 
-def check(report):
-    load('validate_package').validate()
+def check(report, source_git=None):
+    load('validate_package').validate(source_git)
     load('verify_evidence').validate(ROOT,report)
     missing=[layer for layer in ('structure','mock','native','host','visual','platform') if report['layers'][layer]['status']!='PASS']
     git=subprocess.run(['git','rev-parse','--show-toplevel'],cwd=ROOT,capture_output=True,text=True)
@@ -27,6 +27,6 @@ def check(report):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('report',type=Path)
-    args=parser.parse_args();result=check(json.loads(args.report.read_text()))
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('report',type=Path);parser.add_argument('--source-git',type=Path)
+    args=parser.parse_args();result=check(json.loads(args.report.read_text()),args.source_git)
     print(json.dumps(result,ensure_ascii=False));raise SystemExit(0 if result['ready'] else 1)

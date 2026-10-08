@@ -54,3 +54,14 @@ review-request 的 payload 字段：
 deliver 要求当前视觉 PASS、候选与原片未变，以及同一库在不同 runId 的独立会话重开回执。设置与照片源身份必须一致，library.info 明确 persistent=true、unsavedOps=0，库摘要不能在重开后变化。只满足其中一层时不能完成。
 
 成功后保留 state.json、delivery.json、执行日志、审阅请求/回执和修订历史；交付回执分列执行、持久化、文件、重开、视觉及未验证项。真实宿主/原生/视觉验收与发行状态见 [实施证据](verification/implementation-evidence.md)。
+
+## 发行来源校验
+
+候选来源仅校验候选身份和摘要。切换为正式发行锁后，需要调用者提供实际技能源 Git 检出以核验 tag、commit 与文件 blob：
+
+```bash
+python3 -I -B scripts/validate_package.py --source-git /absolute/lightcraft-skills
+python3 -I -B scripts/release_preflight.py docs/verification/local-report.json --source-git /absolute/lightcraft-skills
+```
+
+CI 使用 `LIGHTCRAFT_SOURCE_GIT` 指向受检来源；工作流只从固定官方来源仓库检出锁内 commit，并拉取 tag。检查入口不会自动克隆或安装，缺少 Git 来源仍拒绝正式发行校验。通过来源检查不等于宿主、视觉或公开发行通过。

@@ -11,6 +11,9 @@ test_candidate_identity_mismatch_is_refused (test_provenance_identity.Provenance
 test_extra_skill_and_file_are_refused (test_provenance_identity.ProvenanceIdentity.test_extra_skill_and_file_are_refused) ... ok
 test_published_tag_must_resolve_to_expected_commit (test_provenance_identity.ProvenanceIdentity.test_published_tag_must_resolve_to_expected_commit) ... ok
 test_prepare_binds_tag_commit_and_preserves_user_changes (test_release_upgrade.ReleaseUpgrade.test_prepare_binds_tag_commit_and_preserves_user_changes) ... ok
+test_ci_environment_source_is_available_to_function_entry (test_release_validation_cli.ReleaseValidationCli.test_ci_environment_source_is_available_to_function_entry) ... ok
+test_cli_accepts_explicit_source_git_and_checks_real_tag_blobs (test_release_validation_cli.ReleaseValidationCli.test_cli_accepts_explicit_source_git_and_checks_real_tag_blobs) ... ok
+test_release_gate_forwards_source_git_without_bypassing_other_layers (test_release_validation_cli.ReleaseValidationCli.test_release_gate_forwards_source_git_without_bypassing_other_layers) ... ok
 test_changed_candidate_expires_visual_pass (test_review_contract.ReviewContract.test_changed_candidate_expires_visual_pass) ... ok
 test_delivery_requires_explicit_persistence_and_separates_layers (test_review_contract.ReviewContract.test_delivery_requires_explicit_persistence_and_separates_layers) ... ok
 test_duplicate_review_is_refused_and_no_reopen_no_delivery (test_review_contract.ReviewContract.test_duplicate_review_is_refused_and_no_reopen_no_delivery) ... ok
@@ -25,6 +28,6 @@ test_parent_path_alias_preserves_input_identity_after_create (test_task_core.Tas
 test_two_controllers_cannot_take_same_lock (test_task_core.TaskCore.test_two_controllers_cannot_take_same_lock) ... ok
 
 ----------------------------------------------------------------------
-Ran 25 tests in 2.664s
+Ran 28 tests in 5.538s
 
 OK

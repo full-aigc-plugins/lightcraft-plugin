@@ -8,12 +8,42 @@ permissions:
 jobs:
   contract:
     runs-on: macos-14
+    defaults:
+      run:
+        working-directory: plugin
+    env:
+      LIGHTCRAFT_SOURCE_GIT: ${{ github.workspace }}/source-validation
     strategy:
       fail-fast: false
       matrix:
         python: ['3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          path: plugin
+      - name: Read immutable source identity
+        id: source
+        run: |
+          python3 - <<'PYCODE'
+          import json, os, pathlib, re
+          lock = json.loads(pathlib.Path('candidate-source.json').read_text())
+          commit = ''
+          if lock.get('sourceStatus') == 'published-immutable-release':
+              if lock.get('repository') != 'https://github.com/full-aigc-skills/lightcraft-skills':
+                  raise ValueError('source_repository_mismatch')
+              commit = lock.get('commit', '')
+              if not re.fullmatch(r'[0-9a-f]{40}', commit):
+                  raise ValueError('release_commit_invalid')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+              stream.write('commit=' + commit + '\n')
+          PYCODE
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.source.outputs.commit != ''
+        with:
+          repository: full-aigc-skills/lightcraft-skills
+          ref: ${{ steps.source.outputs.commit }}
+          fetch-depth: 0
+          path: source-validation
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: ${{ matrix.python }}

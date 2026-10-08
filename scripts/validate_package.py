@@ -1,6 +1,8 @@
 """校验插件来源和分发材料；不安装、不生成照片。"""
+import argparse
 import importlib.util
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -9,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def validate(source_git=None):
     spec = importlib.util.spec_from_file_location('provenance', ROOT / 'scripts/provenance.py')
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    # CI 显式提供只读来源检出；不自动克隆，也不以摘要代替 tag/commit 核验。
+    source_git = source_git or os.environ.get('LIGHTCRAFT_SOURCE_GIT')
     result = module.validate(ROOT, source_git)
     for name in ['LICENSE', 'licenses/Apache-2.0.txt', 'THIRD_PARTY_NOTICES.md']:
         if not (ROOT / name).is_file():
@@ -24,4 +28,7 @@ def validate(source_git=None):
 
 
 if __name__ == '__main__':
-    print(json.dumps(validate(), ensure_ascii=False))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source-git', type=Path, help='用于核验发行 tag/commit/blob 的本地来源 Git 根目录')
+    args = parser.parse_args()
+    print(json.dumps(validate(args.source_git), ensure_ascii=False))
