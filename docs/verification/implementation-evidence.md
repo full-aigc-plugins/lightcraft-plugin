@@ -24,11 +24,11 @@
 | P-3.5 | LOCAL_DONE | tests/test_review_contract.py |
 | P-4.1 | LOCAL_DONE | .codex-plugin/plugin.json, scripts/validate_package.py |
 | P-4.2 | LOCAL_DONE | .github/workflows/offline-contracts.yml, tests/, 配套技能库 tests/test_package.py；远端三个 Python 版本 CI 均通过，见 remote-ci.json |
-| P-4.3 | OPEN | .codex-plugin/plugin.json。宿主发现、加载、六技能路由和新缓存安装未授权/未运行。 |
+| P-4.3 | DONE | host-0161-20261008/index.json；真实 Codex 0.161.0、中文空格缓存、五类场景；全量技能预算限制单列。 |
 | P-4.4 | DONE | native-20261008/index.json、实际原生回执与宿主缓存控制器交付证据；仅该固定制品与合成样本范围。 |
 | P-4.5 | LOCAL_DONE | local-components.json；不添加 hooks，无自动安装或扫描 |
 | P-5.1 | LOCAL_DONE | 配套技能库 scripts/generate_runtime.py/scripts/sync_local_snapshot.py/tests/test_snapshot_sync.py, tests/test_snapshot.py |
-| P-5.2 | OPEN | scripts/provenance.py, scripts/release_preflight.py。未获 Git/远端/发布授权，无实际 tag/commit。 |
+| P-5.2 | DONE | source-release.json、candidate-source.json、source-migrations/；实际已公开来源 tag/commit/摘要。 |
 | P-5.3 | OPEN | scripts/release_upgrade.py, tests/test_release_upgrade.py。升级预检与模拟 Git 回归已完成；实际来源发行、升级应用及宿主更新识别未验证。 |
 | P-5.4 | OPEN | docs/verification/local-report.json。本地适用检查已通过；原生/宿主/视觉/发行缺失；远端离线 CI 已通过，不 sync/archive。 |
 | P-6.1 | LOCAL_DONE | openspec/changes/extend-lightcraft-connect-mcp-plugin/ |
@@ -77,3 +77,11 @@
 ### 发行检查入口回归
 
 新增 test_release_validation_cli.py：以临时本地 Git 仓库验证 `--source-git`、CI 环境变量与发行门禁参数转交。三项先因缺失入口失败，再通过；不是公开来源发行或宿主升级识别证据。P-5.3 仍 OPEN，须待真实来源发行和宿主更新验收。
+
+## 2026-10-08 Codex 0.161.0 宿主验收
+
+已获隔离安装授权，CLI 0.161.0 安装于临时独立前缀；全局 CLI 仍为 0.147.0。插件在含中文和空格的新缓存目录加载六项技能。实际模型分别通过自然语言入口、显式导出入口、UNKNOWN 恢复边界、缺失依赖无安装诊断与无关请求。逐项命令、退出码与模型结果见 [宿主证据](host-0161-20261008/index.json)。验收进程只启用六项 Lightcraft 技能，不修改全局配置；全量 771 技能环境仍超上下文预算，仅通过文件搜索读取入口，不声称完整环境默认发现通过。历史章节描述当时状态，以本节和 local-report.json 为当前结论。
+
+### 实际来源发行
+
+技能库开发预发行 v0.1.0-dev.1 已公开：远端 tag、GitHub release 目标均为 `87fe7cebab2bc687ef7b819eb355e4e28132e6e9`，ZIP 与 SHA256SUMS 已上传；见 [公开来源身份](source-release.json)。该提交 Python 3.11/3.12/3.13 远端 CI 均通过。插件通过真实 `release_upgrade.py --apply` 锁定该来源，108 项技能文件摘要保持一致；迁移日志保留原始 APPLIED_HOST_NOT_VERIFIED 状态，宿主升级另列证据。

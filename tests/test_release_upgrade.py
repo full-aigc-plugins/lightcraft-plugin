@@ -23,13 +23,16 @@ class ReleaseUpgrade(unittest.TestCase):
                 if args[0]=='show':return blobs[args[1].split(':skills/',1)[1]]
                 raise AssertionError(args)
             with patch.object(m,'ROOT',root),patch.object(m,'git',side_effect=git):
+                history=root/'source-migrations';history.mkdir(exist_ok=True)
+                (history/'existing.json').write_text('{"status":"APPLIED_HOST_NOT_VERIFIED"}\n')
+                history_before={f.name:f.read_bytes() for f in history.iterdir() if f.is_file()}
                 before=(root/'candidate-source.json').read_bytes()
                 result=m.prepare(Path(temporary)/'source',tag,commit)
                 self.assertEqual(result['changed'],[changed])
                 self.assertEqual(result['newSource']['skillFileSha256'][changed],hashlib.sha256(blobs[changed]).hexdigest())
                 self.assertEqual(result['hostUpdate'],'NOT_RUN')
                 self.assertEqual(before,(root/'candidate-source.json').read_bytes())
-                self.assertFalse((root/'source-migrations').exists())
+                self.assertEqual(history_before,{f.name:f.read_bytes() for f in history.iterdir() if f.is_file()})
                 with self.assertRaisesRegex(ValueError,'tag_commit'):m.prepare(root,tag,'b'*40)
                 (root/'skills'/changed).write_bytes(b'user change')
                 with self.assertRaisesRegex(ValueError,'preserve_modified'):m.prepare(root,tag,commit)

@@ -28,6 +28,6 @@ test_parent_path_alias_preserves_input_identity_after_create (test_task_core.Tas
 test_two_controllers_cannot_take_same_lock (test_task_core.TaskCore.test_two_controllers_cannot_take_same_lock) ... ok
 
 ----------------------------------------------------------------------
-Ran 28 tests in 5.538s
+Ran 28 tests in 8.370s
 
 OK
