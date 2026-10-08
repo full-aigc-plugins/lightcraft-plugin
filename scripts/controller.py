@@ -16,7 +16,7 @@ def read(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver','session-inspect','raw-inspect'])
+    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver','session-inspect','raw-inspect','sam-inspect'])
     parser.add_argument('task',type=Path)
     parser.add_argument('--payload',type=Path)
     parser.add_argument('--runtime-home',type=Path)
@@ -24,7 +24,12 @@ def main():
     try:
         payload=read(args.payload) if args.payload else {}
         action=args.action
-        if action=='raw-inspect':
+        if action=='sam-inspect':
+            source=Path(__file__).with_name('sam_facts.py')
+            sam_spec=importlib.util.spec_from_file_location('sam_facts',source)
+            sam=importlib.util.module_from_spec(sam_spec);sam_spec.loader.exec_module(sam)
+            result=sam.inspect_sam(args.task)
+        elif action=='raw-inspect':
             source=Path(__file__).with_name('raw_facts.py')
             raw_spec=importlib.util.spec_from_file_location('raw_facts',source)
             raw=importlib.util.module_from_spec(raw_spec);raw_spec.loader.exec_module(raw)

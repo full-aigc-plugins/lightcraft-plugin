@@ -93,3 +93,7 @@ python3 -I -B scripts/controller.py raw-inspect /absolute/raw-evidence.json
 入口只读核对 manifest、原片/目录条目、每次原生回执、相机身份、解码标记、设置重开和导出文件；不会下载、安装或启动 Lightcraft，图像技术检查可调用已有系统解码器。原始文件/回执不可用时，不能声明当前结果已验证。旧格式仅兼容只读历史，不能转换成执行许可。
 
 返回 taskExecutionAllowed=false、deliveryAllowed=false、automaticReplay=false。FULL_RAW_REPORTED 是固定运行时报告，PREVIEW_FALLBACK 不是完整 RAW；UNSUPPORTED 必须来自完整原生导入回执的明确错误，环境失败不能代替。结果只涵盖每个 make/model/variant/SHA256，不按扩展名或品牌泛化。sourceSnapshotMatches=false 只允许查看外来源事实，不代表已升级受保护快照。
+
+## SAM 只读评估报告
+
+`python3 scripts/controller.py sam-inspect /明确的/sam-assessment.json` 复核 `sam_contract.py` 的观察输出。它核对固定模型身份及当前文件，拒绝权限提升；不启动原生程序或模型，不接受许可，不下载。命令缺失记为 UNKNOWN；报告不是原生证明，不能交付或重放。详见 `docs/verification/sam-20261008/README.md`。
