@@ -2,9 +2,11 @@
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import fcntl
+import copy
 import hashlib
 import importlib.util
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
@@ -58,6 +60,9 @@ def inspect(task):
         raise ValueError('task_state_invalid')
     if digest(state['goal']) != state['goalSha256'] or digest(state['plan']) != state['planSha256']:
         raise ValueError('task_identity_mismatch')
+    if 'batchScope' in state:
+        if digest(state['batchScope'])!=state.get('batchScopeSha256'):raise ValueError('batch_scope_identity_mismatch')
+        validate_batch(state['plan'],state['batchScope'],state.get('revisionScope'))
     return state
 
 
@@ -86,9 +91,81 @@ def save(task, state, event):
     atomic(Path(task) / 'state.json', state)
 
 
-def create(task, goal, plan, inputs, library=None, output_root=None, max_revisions=3):
+
+def validate_batch(plan, scope, revision=None):
+    """任务授权策略：约束明确 ID 与字段，不复制原生控件或结果解释。"""
+    if not isinstance(scope,dict) or set(scope)!={'targetIds','observedIds','allowedFields'}:raise ValueError('batch_scope_invalid')
+    def ids(values):
+        if not isinstance(values,list) or not values or len(values)>200 or any(type(i) is not int or i<=0 for i in values) or len(set(values))!=len(values):raise ValueError('batch_ids_invalid')
+        return set(values)
+    def fields(values):
+        if not isinstance(values,list) or not values or any(not isinstance(v,str) or not v for v in values) or len(set(values))!=len(values):raise ValueError('batch_fields_invalid')
+        return set(values)
+    targets=ids(scope['targetIds']);observed=ids(scope['observedIds']);allowed=fields(scope['allowedFields'])
+    if not targets<=observed:raise ValueError('batch_targets_not_observed')
+    if revision is not None:
+        if not isinstance(revision,dict) or set(revision)!={'targetIds','allowedFields'}:raise ValueError('batch_revision_scope_required')
+        revised=ids(revision['targetIds']);selected=fields(revision['allowedFields'])
+        if not revised<=targets or not selected<=allowed:raise ValueError('batch_revision_outside_scope')
+        targets=revised;allowed=selected
+    module('command_gateway').validate_shape('lightcraft',plan)
+    selected_id=None
+    for step in plan['steps']:
+        command=step['command'];params=step['params']
+        if command=='develop.set':
+            if set(params)!={'ids','values'} or not ids(params['ids'])<=targets:raise ValueError('batch_write_outside_scope')
+            values=params['values']
+            if not isinstance(values,dict) or not values or not set(values)<=allowed or any(type(v) not in (int,float) or not math.isfinite(v) for v in values.values()):raise ValueError('batch_fields_outside_scope')
+        elif command=='library.select':
+            if set(params)-{'ids','active'} or not ids(params.get('ids'))<=observed or type(params.get('active')) is not int or params['active'] not in params['ids']:raise ValueError('batch_selection_invalid')
+            selected_id=params['active']
+        elif command in ('photo.inspect','develop.get'):
+            if set(params)!={'id'} or type(params['id']) is not int or params['id'] not in observed:raise ValueError('batch_read_identity_invalid')
+        elif command=='app.export':
+            if selected_id not in targets:raise ValueError('batch_export_requires_target_selection')
+        elif command not in ('library.info','library.state','catalog.query','develop.controls','engine.commands'):
+            raise ValueError('batch_command_not_allowed: '+command)
+    return scope
+
+
+
+def verify_batch_execution(state, receipt):
+    """按照片身份核对真实回执的完整前后设置；缺失观测不能接受。"""
+    if 'batchScope' not in state:return None
+    steps=state['plan']['steps'];rows=receipt.get('steps',[])
+    writes=[i for i,step in enumerate(steps) if step['command']=='develop.set']
+    if not writes:return {'status':'NOT_RUN','reason':'no develop writes'}
+    if len(rows)!=len(steps) or any(row.get('index')!=i or row.get('command')!=steps[i]['command'] or row.get('status')!='SUCCEEDED' for i,row in enumerate(rows)):raise ValueError('batch_steps_incomplete')
+    before={};after={}
+    for i,(step,row) in enumerate(zip(steps,rows)):
+        if step['command']!='photo.inspect':continue
+        result=row.get('native',{}).get('result',{});identifier=step['params']['id']
+        if result.get('id')!=identifier or not isinstance(result.get('develop'),dict):raise ValueError('batch_photo_identity_invalid')
+        source=result.get('source',{})
+        if source.get('type')!='file' or source.get('path') not in state['originals']:raise ValueError('batch_original_identity_invalid')
+        if i<min(writes):before[identifier]=result
+        if i>max(writes):after[identifier]=result
+    observed=set(state['batchScope']['observedIds'])
+    if set(before)!=observed or set(after)!=observed:raise ValueError('batch_observation_incomplete')
+    expected={i:copy.deepcopy(photo['develop']) for i,photo in before.items()}
+    for i in writes:
+        params=steps[i]['params']
+        for identifier in params['ids']:
+            for field,value in params['values'].items():
+                cursor=expected[identifier];parts=field.split('.')
+                for part in parts[:-1]:
+                    if not isinstance(cursor,dict) or part not in cursor:raise ValueError('batch_field_not_observed')
+                    cursor=cursor[part]
+                if not isinstance(cursor,dict) or parts[-1] not in cursor:raise ValueError('batch_field_not_observed')
+                cursor[parts[-1]]=value
+    if any(before[i]['source']!=after[i]['source'] or not module('command_gateway').json_equal(expected[i],after[i]['develop']) for i in observed):raise ValueError('batch_settings_outside_scope')
+    return {'status':'PASS','observedIds':state['batchScope']['observedIds'],'beforeSha256':digest(before),'afterSha256':digest(after),'automaticReplay':False}
+
+
+def create(task, goal, plan, inputs, library=None, output_root=None, max_revisions=3, batch_scope=None):
     gateway = module('command_gateway')
     gateway.validate_shape('lightcraft', plan)
+    if batch_scope is not None:validate_batch(plan,batch_scope)
     if type(max_revisions) is not int or not 0 <= max_revisions <= 20: raise ValueError('revision_limit_invalid')
     # 先按原输入拒绝文件链接，再统一父目录别名，避免 /tmp 与 /private/tmp 误判漂移。
     originals = {str(Path(path).resolve()): sha for path, sha in gateway.capture_inputs(inputs).items()}
@@ -100,6 +177,7 @@ def create(task, goal, plan, inputs, library=None, output_root=None, max_revisio
              'outputRoot': str(Path(output_root).resolve()) if output_root else None,
              'revision': 0, 'maxRevisions': max_revisions, 'history': [], 'automaticReplay': False,
              'createdAt': now(), 'acceptance': {'execution':'NOT_RUN','persistence':'NOT_RUN','artifacts':'NOT_RUN','reopen':'NOT_RUN','visual':'NOT_RUN'}}
+    if batch_scope is not None:state.update(batchScope=batch_scope,batchScopeSha256=digest(batch_scope))
     task = Path(task)
     gateway.validate_schema(json.loads((ROOT/'schemas/task-state.schema.json').read_text()),state)
     task.mkdir(parents=True, exist_ok=False)
@@ -153,6 +231,9 @@ def run(task, runtime_home=None):
                 state['runId'] = receipt.get('runId')
                 state['acceptance']['execution'] = receipt['status']
                 state['status'] = 'VERIFYING' if receipt['status'] == 'NATIVE_EXIT_ZERO_REVIEW_REQUIRED' else 'FAILED_OR_PARTIAL' if receipt['status']=='FAILED_OR_PARTIAL' else 'UNKNOWN'
+                if state['status']=='VERIFYING' and 'batchScope' in state:
+                    try:state['batchObservation']=verify_batch_execution(state,receipt)
+                    except (ValueError,KeyError,TypeError) as error:state.update(status='UNKNOWN',controllerError=str(error))
         save(task, state, 'execution_recorded')
         return state
 
@@ -247,9 +328,15 @@ def review_request(task, candidates, settings, rubric_version, reopen_evidence=N
                 or receipt.get('skillResourceSha256')!=module('command_gateway').capture_resources(ROOT/'skills/lightcraft-use/scripts')):
             raise ValueError('review_execution_identity_mismatch')
         observed=[r.get('native',{}).get('result') for r in receipt.get('steps',[]) if r.get('command')=='develop.get' and r.get('status')=='SUCCEEDED']
-        if settings not in observed: raise ValueError('review_settings_not_observed')
+        if 'batchScope' not in state and settings not in observed: raise ValueError('review_settings_not_observed')
         photos=[r.get('native',{}).get('result') for r in receipt.get('steps',[]) if r.get('command')=='photo.inspect' and r.get('status')=='SUCCEEDED']
         if not photos or any(not isinstance(p,dict) or 'id' not in p or 'source' not in p for p in photos):raise ValueError('review_photo_identity_not_observed')
+        if 'batchScope' in state:
+            if state.get('batchObservation',{}).get('status')!='PASS':raise ValueError('batch_review_observation_required')
+            latest={p['id']:p for p in photos};targets=state['batchScope']['targetIds']
+            expected={str(i):latest[i]['develop'] for i in targets}
+            if not module('command_gateway').json_equal(settings,expected):raise ValueError('batch_review_settings_mismatch')
+            photos=[latest[i] for i in targets]
         photo_identity=[{'id':p['id'],'source':p['source']} for p in photos]
         if not state['outputRoot'] or not candidates: raise ValueError('review_candidates_required')
         facts = []
@@ -294,10 +381,12 @@ def revise(task, plan, issue, scope):
         if not issue or not scope: raise ValueError('revision_scope_required')
         if state['revision']>=state['maxRevisions']: raise ValueError('revision_limit_reached')
         module('command_gateway').validate_shape('lightcraft',plan)
+        if 'batchScope' in state:validate_batch(plan,state['batchScope'],scope)
         module('command_gateway').preflight_writes(plan,state['originals'],state['outputRoot'])
         state.setdefault('revisions',[]).append({'revision':state['revision'],'request':state['reviewRequest'],'receipt':state['reviewReceipt'],'issue':issue,'scope':scope})
         state.update(status='PLANNED',plan=plan,planSha256=digest(plan),revision=state['revision']+1)
-        for key in ['reviewRequest','reviewReceipt','artifacts','receiptPath','runId','reopenEvidence']:
+        if 'batchScope' in state:state['revisionScope']=scope
+        for key in ['reviewRequest','reviewReceipt','artifacts','receiptPath','runId','reopenEvidence','batchObservation']:
             state.pop(key,None)
         state['acceptance']={k:'NOT_RUN' for k in state['acceptance']}
         save(task,state,'revision_planned')
@@ -322,8 +411,12 @@ def deliver(task):
                 or evidence.get('skillResourceSha256')!=module('command_gateway').capture_resources(ROOT/'skills/lightcraft-use/scripts')):
             raise ValueError('delivery_reopen_identity_mismatch')
         observed = [r.get('native',{}).get('result') for r in evidence.get('steps',[]) if r.get('command')=='develop.get' and r.get('status')=='SUCCEEDED']
-        if state['reviewRequest']['binding']['settings'] not in observed: raise ValueError('delivery_reopen_settings_mismatch')
+        if 'batchScope' not in state and state['reviewRequest']['binding']['settings'] not in observed: raise ValueError('delivery_reopen_settings_mismatch')
         photos=[r.get('native',{}).get('result') for r in evidence.get('steps',[]) if r.get('command')=='photo.inspect' and r.get('status')=='SUCCEEDED']
+        if 'batchScope' in state:
+            latest={p['id']:p for p in photos};targets=state['batchScope']['targetIds']
+            if not set(targets)<=set(latest) or not module('command_gateway').json_equal({str(i):latest[i].get('develop') for i in targets},state['reviewRequest']['binding']['settings']):raise ValueError('batch_delivery_settings_mismatch')
+            photos=[latest[i] for i in targets]
         identities=[{'id':p['id'],'source':p['source']} for p in photos if isinstance(p,dict) and 'id' in p and 'source' in p]
         if sorted(identities,key=digest)!=sorted(state['reviewRequest']['binding']['photos'],key=digest):raise ValueError('delivery_reopen_photo_identity_mismatch')
         if not state['library'] or evidence.get('libraryAfterSha256')!=module('command_gateway').capture_inputs([state['library']]):raise ValueError('delivery_library_changed_after_reopen')

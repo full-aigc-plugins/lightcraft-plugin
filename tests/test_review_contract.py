@@ -118,4 +118,33 @@ class ReviewContract(unittest.TestCase):
             with self.assertRaises(ValueError):core().module('command_gateway').read_receipt(path)
 
 
+
+    def setup_batch(self,root):
+        c,task,photo,old_request=self.setup_task(root);state=c.inspect(task)
+        state['plan']={'domain':'lightcraft','steps':[{'command':'develop.get','params':{'id':1}},{'command':'photo.inspect','params':{'id':1}}]}
+        state.update(batchScope={'targetIds':[1],'observedIds':[1],'allowedFields':['light.exposure']},batchObservation={'status':'PASS'},status='VERIFYING')
+        state['batchScopeSha256']=c.digest(state['batchScope']);state['planSha256']=c.digest(state['plan'])
+        receipt=json.loads(Path(state['receiptPath']).read_text());receipt['planSha256']=state['planSha256'];receipt['steps'][1]['native']['result']['develop']={'light':{'exposure':.5}}
+        Path(state['receiptPath']).write_text(json.dumps(receipt));state.pop('reviewRequest',None);c.save(task,state,'mock_batch_execution')
+        return c,task,photo
+
+    def test_batch_review_requires_settings_bound_to_each_photo(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            c,task,photo=self.setup_batch(Path(temporary));before=(task/'state.json').read_bytes()
+            for settings in [{'light':{'exposure':.5}},{'1':{'light':{'exposure':0}}}]:
+                with self.assertRaisesRegex(ValueError,'batch_review_settings'):c.review_request(task,[{'path':str(photo)}],settings,'batch-v1')
+                self.assertEqual(before,(task/'state.json').read_bytes())
+            request=c.review_request(task,[{'path':str(photo)}],{'1':{'light':{'exposure':.5}}},'batch-v1')
+            self.assertEqual(request['binding']['settings']['1']['light']['exposure'],.5)
+
+    def test_batch_reopen_wrong_photo_settings_cannot_deliver(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            c,task,photo=self.setup_batch(Path(temporary));request=c.review_request(task,[{'path':str(photo)}],{'1':{'light':{'exposure':.5}}},'batch-v1');c.review(task,self.review_receipt(request))
+            state=c.inspect(task);evidence=json.loads(Path(state['receiptPath']).read_text());library=Path(state['library']);library.mkdir()
+            evidence.update(runId=str(uuid.uuid4()),libraryPath=state['library'],libraryAfterSha256=c.module('command_gateway').capture_inputs([library]))
+            evidence['steps'][1]['native']['result']['develop']['light']['exposure']=0
+            path=task/'mock-batch-reopen.json';path.write_text(json.dumps(evidence));state['reopenEvidence']={'receiptPath':str(path)};c.save(task,state,'mock_batch_reopen')
+            with self.assertRaisesRegex(ValueError,'batch_delivery_settings'):c.deliver(task)
+            self.assertFalse((task/'delivery.json').exists())
+
 if __name__=='__main__':unittest.main()

@@ -75,3 +75,11 @@ python3 -I -B scripts/controller.py session-inspect /absolute/probe/receipt.json
 输入必须是上游 `session_probe.py` 生成的 v1 只读探测回执。适配器核对固定请求、计划、原生版本与摘要、模式、端点和步骤，不启动原生程序或写入任务。`sourceSnapshotMatches=false` 表示观察来自其他技能源资源；只能只读查看，不得用来恢复任务或交付照片。原生协议未提供桌面会话 UUID，不能把客户端 runId 当成桌面身份。
 
 initialize 成功只说明协议启动；实际库查询失败仍是 FAILED_OR_PARTIAL 或 UNKNOWN。任何探测都返回 taskExecutionAllowed=false、deliveryAllowed=false、automaticReplay=false。插件受保护技能快照仍锁定公开 v0.1.0-dev.1，此接口不代表已安装快照支持新增 MCP 执行。
+
+## 结构化批量范围
+
+init payload 可提供 batch_scope：`{"targetIds":[2,3],"observedIds":[1,2,3],"allowedFields":["light.exposure"]}`。observedIds 包含目标和需保全的对照照片。develop.set 必须明确提供 ids 与 values，不允许当前选择式 control/value、全量 reset 或其他写命令。每张观测照片须在全部写入之前和之后各 photo.inspect 一次，完整前后设置和原片身份必须一致，只有授权字段可改变。
+
+批量 revise 的 scope 必须为 `{"targetIds":[3],"allowedFields":["light.exposure"]}`，且为初始合同子集；run 会重新校验。批量 review-request 的 settings 改为按照片 ID 的对象，例如 `{"2":完整实际设置,"3":完整实际设置}`，不能用单张设置替代整个批量。每张 target 的实际 photo.inspect 必须出现在独立重开回执中，并与审阅绑定的完整设置一致。
+
+该能力是显式 opt-in；旧任务不自动推导批量范围。实际测试见 [批量验收](verification/batch-20261008/README.md)。
