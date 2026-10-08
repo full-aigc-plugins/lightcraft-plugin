@@ -1,60 +1,13 @@
 {
-  "command": "openspec validate --all --strict --no-interactive --json",
+  "command": [
+    "openspec",
+    "validate",
+    "--all",
+    "--strict",
+    "--no-interactive"
+  ],
   "exitCode": 0,
-  "result": {
-    "items": [
-      {
-        "id": "extend-lightcraft-connect-mcp-plugin",
-        "type": "change",
-        "valid": true,
-        "issues": [],
-        "durationMs": 3
-      },
-      {
-        "id": "extend-lightcraft-expanded-photo-capabilities-plugin",
-        "type": "change",
-        "valid": true,
-        "issues": [],
-        "durationMs": 4
-      },
-      {
-        "id": "extend-lightcraft-portable-artcraft-delivery-plugin",
-        "type": "change",
-        "valid": true,
-        "issues": [],
-        "durationMs": 4
-      },
-      {
-        "id": "harden-lightcraft-plugin-delivery",
-        "type": "change",
-        "valid": true,
-        "issues": [],
-        "durationMs": 5
-      }
-    ],
-    "summary": {
-      "totals": {
-        "items": 4,
-        "passed": 4,
-        "failed": 0
-      },
-      "byType": {
-        "change": {
-          "items": 4,
-          "passed": 4,
-          "failed": 0
-        },
-        "spec": {
-          "items": 0,
-          "passed": 0,
-          "failed": 0
-        }
-      }
-    },
-    "version": "1.0",
-    "root": {
-      "path": "/Users/wandl/workspaces/workspace-agent-skills/full-aigc-plugins-repositories/lightcraft-plugin",
-      "source": "nearest"
-    }
-  }
+  "stdout": "✓ spec/artifact-review\n✓ change/extend-lightcraft-connect-mcp-plugin\n✓ change/extend-lightcraft-expanded-photo-capabilities-plugin\n✓ change/extend-lightcraft-portable-artcraft-delivery-plugin\n✓ spec/host-delivery\n✓ spec/provenance-distribution\n✓ spec/task-recovery\nTotals: 7 passed, 0 failed (7 items)\n",
+  "stderr": "",
+  "scope": "post-archive current main specs and three independent active extensions"
 }

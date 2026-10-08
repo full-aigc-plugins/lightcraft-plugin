@@ -26,6 +26,6 @@ LightCraft 插件当前是六项独立技能的本地快照，根清单通过已
 
 ## Impact
 
-影响插件清单、来源锁、插件本地控制器及 Schema、校验器、文档、测试与未来 CI。上游六项技能及公共运行资源由 [lightcraft-skills / harden-lightcraft-skill-workflows](https://github.com/full-aigc-skills/lightcraft-skills/blob/main/openspec/changes/harden-lightcraft-skill-workflows/proposal.md) 唯一维护；本项目按经过验证的来源同步，不直接修改受管快照解决缺陷。
+影响插件清单、来源锁、插件本地控制器及 Schema、校验器、文档、测试与未来 CI。上游六项技能及公共运行资源由 [lightcraft-skills / harden-lightcraft-skill-workflows](https://github.com/full-aigc-skills/lightcraft-skills/blob/main/openspec/changes/archive/2026-10-08-harden-lightcraft-skill-workflows/proposal.md) 唯一维护；本项目按经过验证的来源同步，不直接修改受管快照解决缺陷。
 
 `P-` 为本项目任务 ID，`S-` 为配套技能库任务 ID。当前只形成规格，不实施、安装、同步快照、创建 Git/远端或发布；主规格同步和归档等待实现与全部对应验收。

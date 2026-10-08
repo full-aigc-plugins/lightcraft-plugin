@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T12:56:06.268338+00:00",
-  "sourceFingerprint": "130d30f6a211a8814b02bb68aff78270a07eabaae0df3cacf1fb49a3a942e43b",
+  "generatedAt": "2026-10-08T12:59:48.211832+00:00",
+  "sourceFingerprint": "038dc170ee708244eac02c3d58eaa03c3ac8043c820d92d0d45a33d1767f4536",
   "project": "lightcraft-plugin",
   "developmentVersion": "0.1.0-dev.2",
   "pinnedNativeVersion": "0.2.1",
-  "overall": "LOCAL_VERIFIED_ACCEPTANCE_OPEN",
+  "overall": "MAIN_CHANGE_ACCEPTED_P3_OPEN",
   "localRuns": [
     {
       "python": "Python 3.12.13",
@@ -115,15 +115,15 @@
       "evidence": [
         "docs/verification/remote-ci.json"
       ],
-      "testedCommit": "75ee8a287235fc6b5d8a91fda777ae997614bd81",
+      "testedCommit": "7b3bfe2463ed2c6dfe2003b8dcf6a4e0467df680",
       "scope": "Python 3.11/3.12/3.13; official published source commit checkout and tag/blob validation actually executed"
     }
   },
   "python311": "NOT_RUN_UNAVAILABLE_LOCALLY",
   "git": "MAIN_PUSHED",
-  "published": false,
+  "published": true,
   "automaticReplay": false,
-  "specSyncArchive": "NOT_RUN_ACCEPTANCE_OPEN",
+  "specSyncArchive": "PASS_MAIN_CHANGE_ONLY",
   "quickValidate": "NOT_RUN_PYYAML_UNAVAILABLE_STDLIB_EQUIVALENT_USED",
   "tddObservedFailures": [
     "nested timeout previously downgraded UNKNOWN",
@@ -147,22 +147,25 @@
     "read-only upgrade preflight test incorrectly rejected existing real migration history; existing history preservation now asserted"
   ],
   "releasePreflight": {
-    "ready": false,
-    "missing": [
-      "host",
-      "published_source_identity"
-    ],
+    "ready": true,
+    "missing": [],
     "published": false,
     "automaticPublish": false
   },
   "runtimeLockSha256": "38a5d826d3ee5fec91edc004710c564d8e2766eafa66a000f78e302a09d6b253",
   "managedSkillFiles": 108,
-  "releaseStatus": "DEVELOPMENT_DRAFT_AWAITING_ACCEPTANCE",
+  "releaseStatus": "PUBLIC_DEVELOPMENT_PRERELEASE",
   "documentationUpdate": "real native/host evidence and completed task markers",
   "sourceRelease": {
     "tag": "v0.1.0-dev.1",
     "commit": "87fe7cebab2bc687ef7b819eb355e4e28132e6e9",
     "url": "https://github.com/full-aigc-skills/lightcraft-skills/releases/tag/v0.1.0-dev.1"
   },
-  "hostUpgrade": "PASS_VERSION_0.1.0-dev.1_TO_0.1.0-dev.2"
+  "hostUpgrade": "PASS_VERSION_0.1.0-dev.1_TO_0.1.0-dev.2",
+  "pluginRelease": {
+    "tag": "v0.1.0-dev.2",
+    "commit": "7b3bfe2463ed2c6dfe2003b8dcf6a4e0467df680",
+    "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/releases/tag/v0.1.0-dev.2"
+  },
+  "remainingExtensions": "3 independent changes / 12 OPEN tasks in this repository"
 }
