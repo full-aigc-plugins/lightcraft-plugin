@@ -23,14 +23,14 @@
 | P-3.4 | LOCAL_DONE | tests/test_review_contract.py |
 | P-3.5 | LOCAL_DONE | tests/test_review_contract.py |
 | P-4.1 | LOCAL_DONE | .codex-plugin/plugin.json, scripts/validate_package.py |
-| P-4.2 | LOCAL_DONE | .github/workflows/offline-contracts.yml, tests/, 配套技能库 tests/test_package.py；远端 CI 未运行 |
+| P-4.2 | LOCAL_DONE | .github/workflows/offline-contracts.yml, tests/, 配套技能库 tests/test_package.py；远端三个 Python 版本 CI 均通过，见 remote-ci.json |
 | P-4.3 | OPEN | .codex-plugin/plugin.json。宿主发现、加载、六技能路由和新缓存安装未授权/未运行。 |
 | P-4.4 | OPEN | scripts/controller.py, scripts/task_core.py；仅 mock 回归。固定制品在宿主中的原生与独立视觉闭环未运行。 |
 | P-4.5 | LOCAL_DONE | local-components.json；不添加 hooks，无自动安装或扫描 |
 | P-5.1 | LOCAL_DONE | 配套技能库 scripts/generate_runtime.py/scripts/sync_local_snapshot.py/tests/test_snapshot_sync.py, tests/test_snapshot.py |
 | P-5.2 | OPEN | scripts/provenance.py, scripts/release_preflight.py。未获 Git/远端/发布授权，无实际 tag/commit。 |
 | P-5.3 | OPEN | scripts/release_upgrade.py, tests/test_release_upgrade.py。升级预检与模拟 Git 回归已完成；实际来源发行、升级应用及宿主更新识别未验证。 |
-| P-5.4 | OPEN | docs/verification/local-report.json。本地适用检查已通过；原生/宿主/视觉/发行/远端 CI 缺失，不 sync/archive。 |
+| P-5.4 | OPEN | docs/verification/local-report.json。本地适用检查已通过；原生/宿主/视觉/发行缺失；远端离线 CI 已通过，不 sync/archive。 |
 | P-6.1 | LOCAL_DONE | openspec/changes/extend-lightcraft-connect-mcp-plugin/ |
 | P-6.2 | LOCAL_DONE | openspec/changes/extend-lightcraft-expanded-photo-capabilities-plugin/ |
 | P-6.3 | LOCAL_DONE | openspec/changes/extend-lightcraft-portable-artcraft-delivery-plugin/ |
@@ -54,7 +54,7 @@
 
 ## 验证边界
 
-- Python 3.12/3.13 本地完整回归：PASS；Python 3.11 本地不可用，远端 CI 尚未运行。
+- Python 3.12/3.13 本地完整回归：PASS；Python 3.11 本地不可用；远端 Python 3.11/3.12/3.13 离线矩阵全部 PASS，运行身份见 [远端 CI 证据](remote-ci.json)。
 - 六技能隔离、中文空格路径、来源快照和实际合成图像解码：本地检查；不构成固定原生制品的能力证明。
 - skill-creator 的 quick_validate.py 依赖 PyYAML，当前解释器不可用；使用标准库包校验覆盖 frontmatter、结构与引用，没有安装依赖。
 - TRACE 分数仅为静态内容基线，详见配套技能库 docs/verification/trace/，不是路由/模型/原生完成证明。
