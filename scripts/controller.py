@@ -16,7 +16,7 @@ def read(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver'])
+    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver','session-inspect'])
     parser.add_argument('task',type=Path)
     parser.add_argument('--payload',type=Path)
     parser.add_argument('--runtime-home',type=Path)
@@ -24,7 +24,12 @@ def main():
     try:
         payload=read(args.payload) if args.payload else {}
         action=args.action
-        if action=='init': result=core.create(args.task,**payload)
+        if action=='session-inspect':
+            source=Path(__file__).with_name('session_facts.py')
+            session_spec=importlib.util.spec_from_file_location('session_facts',source)
+            session=importlib.util.module_from_spec(session_spec);session_spec.loader.exec_module(session)
+            result=session.inspect_session(args.task)
+        elif action=='init': result=core.create(args.task,**payload)
         elif action in ('status','inspect'): result=core.inspect(args.task)
         elif action=='run': result=core.run(args.task,args.runtime_home)
         elif action=='review-request': result=core.review_request(args.task,**payload)

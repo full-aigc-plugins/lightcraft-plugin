@@ -3,7 +3,8 @@
   "skills": [],
   "controllers": [
     "scripts/task_core.py",
-    "scripts/controller.py"
+    "scripts/controller.py",
+    "scripts/session_facts.py"
   ],
   "hooks": [],
   "hookDecision": "没有需要自动运行的宿主副作用；显式控制器和包校验足以覆盖当前流程。"

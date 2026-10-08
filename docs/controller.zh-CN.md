@@ -65,3 +65,13 @@ python3 -I -B scripts/release_preflight.py docs/verification/local-report.json -
 ```
 
 CI 使用 `LIGHTCRAFT_SOURCE_GIT` 指向受检来源；工作流只从固定官方来源仓库检出锁内 commit，并拉取 tag。检查入口不会自动克隆或安装，缺少 Git 来源仍拒绝正式发行校验。通过来源检查不等于宿主、视觉或公开发行通过。
+
+## 只读 MCP 会话观察
+
+```bash
+python3 -I -B scripts/controller.py session-inspect /absolute/probe/receipt.json
+```
+
+输入必须是上游 `session_probe.py` 生成的 v1 只读探测回执。适配器核对固定请求、计划、原生版本与摘要、模式、端点和步骤，不启动原生程序或写入任务。`sourceSnapshotMatches=false` 表示观察来自其他技能源资源；只能只读查看，不得用来恢复任务或交付照片。原生协议未提供桌面会话 UUID，不能把客户端 runId 当成桌面身份。
+
+initialize 成功只说明协议启动；实际库查询失败仍是 FAILED_OR_PARTIAL 或 UNKNOWN。任何探测都返回 taskExecutionAllowed=false、deliveryAllowed=false、automaticReplay=false。插件受保护技能快照仍锁定公开 v0.1.0-dev.1，此接口不代表已安装快照支持新增 MCP 执行。
