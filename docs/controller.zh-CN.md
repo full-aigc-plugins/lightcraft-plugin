@@ -97,3 +97,7 @@ python3 -I -B scripts/controller.py raw-inspect /absolute/raw-evidence.json
 ## SAM 只读评估报告
 
 `python3 scripts/controller.py sam-inspect /明确的/sam-assessment.json` 复核 `sam_contract.py` 的观察输出。它核对固定模型身份及当前文件，拒绝权限提升；不启动原生程序或模型，不接受许可，不下载。命令缺失记为 UNKNOWN；报告不是原生证明，不能交付或重放。详见 `docs/verification/sam-20261008/README.md`。
+
+## 三领域协议只读前检
+
+`python3 scripts/controller.py craft-inspect /明确的/bundle.json` 调用随插件分发的 craft_exchange.ts，需要已有 Node 24+。操作 task/artifact/invalidate 的结构见 [协议接口](craft-exchange.zh-CN.md)。输出不允许任务执行或重放；真实 ArtCraft 宿主路由仍未验收。
