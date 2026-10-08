@@ -1,281 +1,305 @@
 {
   "conclusion": "success",
-  "headSha": "0d5207d1e6b2ef290012f57696ef3c3e2925702e",
+  "headSha": "75ee8a287235fc6b5d8a91fda777ae997614bd81",
   "jobs": [
     {
-      "completedAt": "2026-10-08T12:36:29Z",
+      "completedAt": "2026-10-08T12:55:01Z",
       "conclusion": "success",
-      "databaseId": 113313785582,
-      "name": "contract (3.11)",
-      "startedAt": "2026-10-08T12:36:18Z",
-      "status": "completed",
-      "steps": [
-        {
-          "completedAt": "2026-10-08T12:36:18Z",
-          "conclusion": "success",
-          "name": "Set up job",
-          "number": 1,
-          "startedAt": "2026-10-08T12:36:18Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-          "number": 2,
-          "startedAt": "2026-10-08T12:36:18Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Read immutable source identity",
-          "number": 3,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "skipped",
-          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-          "number": 4,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
-          "number": 5,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Run python -I -B scripts/validate_package.py",
-          "number": 6,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:25Z",
-          "conclusion": "success",
-          "name": "Run python -I -B -m unittest discover -s tests -v",
-          "number": 7,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:26Z",
-          "conclusion": "success",
-          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
-          "number": 13,
-          "startedAt": "2026-10-08T12:36:25Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:26Z",
-          "conclusion": "success",
-          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-          "number": 14,
-          "startedAt": "2026-10-08T12:36:26Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:26Z",
-          "conclusion": "success",
-          "name": "Complete job",
-          "number": 15,
-          "startedAt": "2026-10-08T12:36:26Z",
-          "status": "completed"
-        }
-      ],
-      "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37778040363/job/113313785582"
-    },
-    {
-      "completedAt": "2026-10-08T12:36:30Z",
-      "conclusion": "success",
-      "databaseId": 113313785939,
-      "name": "contract (3.12)",
-      "startedAt": "2026-10-08T12:36:18Z",
-      "status": "completed",
-      "steps": [
-        {
-          "completedAt": "2026-10-08T12:36:19Z",
-          "conclusion": "success",
-          "name": "Set up job",
-          "number": 1,
-          "startedAt": "2026-10-08T12:36:18Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-          "number": 2,
-          "startedAt": "2026-10-08T12:36:19Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Read immutable source identity",
-          "number": 3,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "skipped",
-          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-          "number": 4,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
-          "number": 5,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:20Z",
-          "conclusion": "success",
-          "name": "Run python -I -B scripts/validate_package.py",
-          "number": 6,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:26Z",
-          "conclusion": "success",
-          "name": "Run python -I -B -m unittest discover -s tests -v",
-          "number": 7,
-          "startedAt": "2026-10-08T12:36:20Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:26Z",
-          "conclusion": "success",
-          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
-          "number": 13,
-          "startedAt": "2026-10-08T12:36:26Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:26Z",
-          "conclusion": "success",
-          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-          "number": 14,
-          "startedAt": "2026-10-08T12:36:26Z",
-          "status": "completed"
-        },
-        {
-          "completedAt": "2026-10-08T12:36:27Z",
-          "conclusion": "success",
-          "name": "Complete job",
-          "number": 15,
-          "startedAt": "2026-10-08T12:36:26Z",
-          "status": "completed"
-        }
-      ],
-      "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37778040363/job/113313785939"
-    },
-    {
-      "completedAt": "2026-10-08T12:36:35Z",
-      "conclusion": "success",
-      "databaseId": 113313786001,
+      "databaseId": 113321361659,
       "name": "contract (3.13)",
-      "startedAt": "2026-10-08T12:36:19Z",
+      "startedAt": "2026-10-08T12:54:45Z",
       "status": "completed",
       "steps": [
         {
-          "completedAt": "2026-10-08T12:36:20Z",
+          "completedAt": "2026-10-08T12:54:47Z",
           "conclusion": "success",
           "name": "Set up job",
           "number": 1,
-          "startedAt": "2026-10-08T12:36:19Z",
+          "startedAt": "2026-10-08T12:54:46Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:22Z",
+          "completedAt": "2026-10-08T12:54:48Z",
           "conclusion": "success",
           "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
           "number": 2,
-          "startedAt": "2026-10-08T12:36:20Z",
+          "startedAt": "2026-10-08T12:54:47Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:22Z",
+          "completedAt": "2026-10-08T12:54:49Z",
           "conclusion": "success",
           "name": "Read immutable source identity",
           "number": 3,
-          "startedAt": "2026-10-08T12:36:22Z",
+          "startedAt": "2026-10-08T12:54:48Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:22Z",
-          "conclusion": "skipped",
+          "completedAt": "2026-10-08T12:54:50Z",
+          "conclusion": "success",
           "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
           "number": 4,
-          "startedAt": "2026-10-08T12:36:22Z",
+          "startedAt": "2026-10-08T12:54:49Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:22Z",
+          "completedAt": "2026-10-08T12:54:50Z",
           "conclusion": "success",
           "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
           "number": 5,
-          "startedAt": "2026-10-08T12:36:22Z",
+          "startedAt": "2026-10-08T12:54:50Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:23Z",
+          "completedAt": "2026-10-08T12:54:51Z",
           "conclusion": "success",
           "name": "Run python -I -B scripts/validate_package.py",
           "number": 6,
-          "startedAt": "2026-10-08T12:36:22Z",
+          "startedAt": "2026-10-08T12:54:50Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:31Z",
+          "completedAt": "2026-10-08T12:54:59Z",
           "conclusion": "success",
           "name": "Run python -I -B -m unittest discover -s tests -v",
           "number": 7,
-          "startedAt": "2026-10-08T12:36:23Z",
+          "startedAt": "2026-10-08T12:54:51Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:31Z",
+          "completedAt": "2026-10-08T12:54:59Z",
           "conclusion": "success",
           "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
-          "number": 13,
-          "startedAt": "2026-10-08T12:36:31Z",
+          "number": 12,
+          "startedAt": "2026-10-08T12:54:59Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:32Z",
+          "completedAt": "2026-10-08T12:54:59Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 13,
+          "startedAt": "2026-10-08T12:54:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:55:00Z",
           "conclusion": "success",
           "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
           "number": 14,
-          "startedAt": "2026-10-08T12:36:31Z",
+          "startedAt": "2026-10-08T12:54:59Z",
           "status": "completed"
         },
         {
-          "completedAt": "2026-10-08T12:36:32Z",
+          "completedAt": "2026-10-08T12:55:00Z",
           "conclusion": "success",
           "name": "Complete job",
           "number": 15,
-          "startedAt": "2026-10-08T12:36:32Z",
+          "startedAt": "2026-10-08T12:55:00Z",
           "status": "completed"
         }
       ],
-      "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37778040363/job/113313786001"
+      "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37780284724/job/113321361659"
+    },
+    {
+      "completedAt": "2026-10-08T12:55:00Z",
+      "conclusion": "success",
+      "databaseId": 113321362024,
+      "name": "contract (3.11)",
+      "startedAt": "2026-10-08T12:54:47Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-08T12:54:48Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-08T12:54:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:49Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "startedAt": "2026-10-08T12:54:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:49Z",
+          "conclusion": "success",
+          "name": "Read immutable source identity",
+          "number": 3,
+          "startedAt": "2026-10-08T12:54:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:50Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 4,
+          "startedAt": "2026-10-08T12:54:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:50Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "number": 5,
+          "startedAt": "2026-10-08T12:54:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:51Z",
+          "conclusion": "success",
+          "name": "Run python -I -B scripts/validate_package.py",
+          "number": 6,
+          "startedAt": "2026-10-08T12:54:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:56Z",
+          "conclusion": "success",
+          "name": "Run python -I -B -m unittest discover -s tests -v",
+          "number": 7,
+          "startedAt": "2026-10-08T12:54:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:56Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "number": 12,
+          "startedAt": "2026-10-08T12:54:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:57Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 13,
+          "startedAt": "2026-10-08T12:54:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:57Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 14,
+          "startedAt": "2026-10-08T12:54:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:57Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-10-08T12:54:57Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37780284724/job/113321362024"
+    },
+    {
+      "completedAt": "2026-10-08T12:55:09Z",
+      "conclusion": "success",
+      "databaseId": 113321362250,
+      "name": "contract (3.12)",
+      "startedAt": "2026-10-08T12:54:49Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-08T12:54:51Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-08T12:54:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:52Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "startedAt": "2026-10-08T12:54:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:52Z",
+          "conclusion": "success",
+          "name": "Read immutable source identity",
+          "number": 3,
+          "startedAt": "2026-10-08T12:54:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:54Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 4,
+          "startedAt": "2026-10-08T12:54:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:54Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "number": 5,
+          "startedAt": "2026-10-08T12:54:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:54:56Z",
+          "conclusion": "success",
+          "name": "Run python -I -B scripts/validate_package.py",
+          "number": 6,
+          "startedAt": "2026-10-08T12:54:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:55:05Z",
+          "conclusion": "success",
+          "name": "Run python -I -B -m unittest discover -s tests -v",
+          "number": 7,
+          "startedAt": "2026-10-08T12:54:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:55:05Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "number": 12,
+          "startedAt": "2026-10-08T12:55:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:55:06Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 13,
+          "startedAt": "2026-10-08T12:55:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:55:06Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 14,
+          "startedAt": "2026-10-08T12:55:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-08T12:55:07Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-10-08T12:55:06Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37780284724/job/113321362250"
     }
   ],
   "status": "completed",
-  "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37778040363"
+  "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/actions/runs/37780284724"
 }

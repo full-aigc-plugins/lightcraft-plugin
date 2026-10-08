@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T12:54:29.607581+00:00",
-  "sourceFingerprint": "e06374935c1299d8dd60a912df50a9258bbe78d594581dd6f3fd193a33669d05",
+  "generatedAt": "2026-10-08T12:56:06.268338+00:00",
+  "sourceFingerprint": "130d30f6a211a8814b02bb68aff78270a07eabaae0df3cacf1fb49a3a942e43b",
   "project": "lightcraft-plugin",
   "developmentVersion": "0.1.0-dev.2",
   "pinnedNativeVersion": "0.2.1",
@@ -90,7 +90,8 @@
     "host": {
       "status": "PASS",
       "evidence": [
-        "docs/verification/host-0161-20261008/index.json"
+        "docs/verification/host-0161-20261008/index.json",
+        "docs/verification/host-0161-20261008/upgrade.json"
       ],
       "scope": "actual host model invocation; six Lightcraft skills enabled in an isolated host home; other skills disabled for these processes only; no global config changes",
       "fullEnvironmentLimitation": "771 skills exceed context budget; full environment description injection not accepted"
@@ -114,8 +115,8 @@
       "evidence": [
         "docs/verification/remote-ci.json"
       ],
-      "testedCommit": "0d5207d1e6b2ef290012f57696ef3c3e2925702e",
-      "scope": "Python 3.11/3.12/3.13 offline contracts including real local Git tag/blob fixtures; candidate checkout branch only, official published checkout not run"
+      "testedCommit": "75ee8a287235fc6b5d8a91fda777ae997614bd81",
+      "scope": "Python 3.11/3.12/3.13; official published source commit checkout and tag/blob validation actually executed"
     }
   },
   "python311": "NOT_RUN_UNAVAILABLE_LOCALLY",
@@ -162,5 +163,6 @@
     "tag": "v0.1.0-dev.1",
     "commit": "87fe7cebab2bc687ef7b819eb355e4e28132e6e9",
     "url": "https://github.com/full-aigc-skills/lightcraft-skills/releases/tag/v0.1.0-dev.1"
-  }
+  },
+  "hostUpgrade": "PASS_VERSION_0.1.0-dev.1_TO_0.1.0-dev.2"
 }

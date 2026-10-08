@@ -8,7 +8,7 @@
 - [唯一实施任务清单](changes/harden-lightcraft-plugin-delivery/tasks.md)
 - [配套项目规格入口](https://github.com/full-aigc-skills/lightcraft-skills/blob/main/openspec/README.md)
 
-任务按 P0–P3 排序，跨项目依赖使用 S-X.Y（技能库）与 P-X.Y（插件）编号。当前主变更任务为 24/26 完成，详见 [实施证据](../docs/verification/implementation-evidence.md)；验收绑定当次源码、输入和产物身份。
+任务按 P0–P3 排序，跨项目依赖使用 S-X.Y（技能库）与 P-X.Y（插件）编号。当前主变更任务为 25/26 完成，详见 [实施证据](../docs/verification/implementation-evidence.md)；验收绑定当次源码、输入和产物身份。
 
 `changes/.../specs/` 是当前变更的增量规格；`openspec/specs/` 暂不填入已实现声明。实现、验证和规格同步完成后才能归档，不能用本次文档校验代替原生运行、宿主加载或视觉验收。
 

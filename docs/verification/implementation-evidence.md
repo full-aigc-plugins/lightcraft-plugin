@@ -29,7 +29,7 @@
 | P-4.5 | LOCAL_DONE | local-components.json；不添加 hooks，无自动安装或扫描 |
 | P-5.1 | LOCAL_DONE | 配套技能库 scripts/generate_runtime.py/scripts/sync_local_snapshot.py/tests/test_snapshot_sync.py, tests/test_snapshot.py |
 | P-5.2 | DONE | source-release.json、candidate-source.json、source-migrations/；实际已公开来源 tag/commit/摘要。 |
-| P-5.3 | OPEN | scripts/release_upgrade.py, tests/test_release_upgrade.py。升级预检与模拟 Git 回归已完成；实际来源发行、升级应用及宿主更新识别未验证。 |
+| P-5.3 | DONE | 实际 source-migrations/、host-0161-20261008/upgrade.json、公开来源检出 CI；归档历史副本保留，原临时目录外部清理单列。 |
 | P-5.4 | OPEN | docs/verification/local-report.json。本地适用检查已通过；原生/宿主/视觉/发行缺失；远端离线 CI 已通过，不 sync/archive。 |
 | P-6.1 | LOCAL_DONE | openspec/changes/extend-lightcraft-connect-mcp-plugin/ |
 | P-6.2 | LOCAL_DONE | openspec/changes/extend-lightcraft-expanded-photo-capabilities-plugin/ |
@@ -85,3 +85,7 @@
 ### 实际来源发行
 
 技能库开发预发行 v0.1.0-dev.1 已公开：远端 tag、GitHub release 目标均为 `87fe7cebab2bc687ef7b819eb355e4e28132e6e9`，ZIP 与 SHA256SUMS 已上传；见 [公开来源身份](source-release.json)。该提交 Python 3.11/3.12/3.13 远端 CI 均通过。插件通过真实 `release_upgrade.py --apply` 锁定该来源，108 项技能文件摘要保持一致；迁移日志保留原始 APPLIED_HOST_NOT_VERIFIED 状态，宿主升级另列证据。
+
+### 实际插件版本升级
+
+持久隔离目录中的 Codex 0.161.0 实际安装插件 0.1.0-dev.1 后升级到 0.1.0-dev.2；app-server 强制重载识别六项技能的新缓存路径，缓存来源锁对应公开技能库 87fe7ce。见 [升级回执](host-0161-20261008/upgrade.json)。宿主移除了旧代码缓存，因此不声称旧缓存保留；归档任务与回执副本在升级前后摘要不变。此前临时目录被外部清理，原始工作目录保留状态无法追溯，本次明确使用已归档的历史记录，不执行重放。插件实际来源锁 CI 已通过官方技能源检出与三个 Python 版本测试，见 remote-ci.json（插件仓库）。
