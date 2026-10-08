@@ -1,0 +1,30 @@
+{
+  "domain": "lightcraft",
+  "version": "0.1.0-dev.1",
+  "status": "LOCAL_IMPLEMENTATION_VERIFIED_ACCEPTANCE_OPEN",
+  "gitRepository": "INITIALIZED",
+  "specification": "OPEN_SPEC_CHANGE_IMPLEMENTED_LOCALLY_ACCEPTANCE_OPEN",
+  "specificationChange": "harden-lightcraft-plugin-delivery",
+  "specificationPath": "openspec/changes/harden-lightcraft-plugin-delivery/",
+  "nativeInstallation": "AWAITING_AUTHORIZATION",
+  "hostDiscovery": "NOT_RUN",
+  "modelDispatch": "NOT_RUN",
+  "creativeAcceptance": "NOT_RUN",
+  "published": false,
+  "tasks": {
+    "complete": 21,
+    "total": 26,
+    "remaining": [
+      "P-4.3",
+      "P-4.4",
+      "P-5.2",
+      "P-5.3",
+      "P-5.4"
+    ]
+  },
+  "evidence": "docs/verification/local-report.json",
+  "remoteCI": "NOT_RUN",
+  "repository": "https://github.com/full-aigc-plugins/lightcraft-plugin",
+  "branch": "main",
+  "releaseStatus": "DEVELOPMENT_CANDIDATE_REVIEW_PENDING"
+}

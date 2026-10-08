@@ -1,0 +1,27 @@
+"""校验插件来源和分发材料；不安装、不生成照片。"""
+import importlib.util
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def validate(source_git=None):
+    spec = importlib.util.spec_from_file_location('provenance', ROOT / 'scripts/provenance.py')
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    result = module.validate(ROOT, source_git)
+    for name in ['LICENSE', 'licenses/Apache-2.0.txt', 'THIRD_PARTY_NOTICES.md']:
+        if not (ROOT / name).is_file():
+            raise ValueError('distribution_material_missing: ' + name)
+    adapters = json.loads((ROOT / '.codex-plugin/plugin.json').read_text())
+    manifest = json.loads((ROOT / 'plugin.json').read_text())
+    if any(adapters.get(key) != manifest.get(key) for key in ['name', 'version', 'description']):
+        raise ValueError('host_manifest_identity_mismatch')
+    spec=importlib.util.spec_from_file_location('package_checks',ROOT/'skills/lightcraft-use/scripts/package_checks.py')
+    checks=importlib.util.module_from_spec(spec);spec.loader.exec_module(checks)
+    quality=checks.skills(ROOT,module.EXPECTED_SKILLS)
+    return dict(result,**quality,plugin='lightcraft',hostAcceptance='NOT_RUN')
+
+
+if __name__ == '__main__':
+    print(json.dumps(validate(), ensure_ascii=False))
