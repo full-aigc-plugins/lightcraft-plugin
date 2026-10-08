@@ -1,30 +1,47 @@
 {
   "domain": "lightcraft",
-  "version": "0.1.0-dev.1",
-  "status": "LOCAL_IMPLEMENTATION_VERIFIED_ACCEPTANCE_OPEN",
+  "version": "0.1.0-dev.3",
+  "status": "CANDIDATE_ACCEPTANCE_OPEN",
   "gitRepository": "MAIN_PUSHED",
-  "specification": "OPEN_SPEC_CHANGE_IMPLEMENTED_LOCALLY_ACCEPTANCE_OPEN",
-  "specificationChange": "harden-lightcraft-plugin-delivery",
-  "specificationPath": "openspec/changes/harden-lightcraft-plugin-delivery/",
-  "nativeInstallation": "PASS_ISOLATED_LOCKED_021",
-  "hostDiscovery": "PASS_SIX_SKILLS",
-  "modelDispatch": "BLOCKED_HOST_COMPATIBILITY",
-  "creativeAcceptance": "PASS_SYNTHETIC_GRADIENT_ONLY",
+  "specification": "BASE_ARCHIVED_EXTENSIONS_OPEN",
+  "specificationChange": "three-independent-extensions",
+  "specificationPath": "openspec/changes/",
+  "nativeInstallation": "NOT_RUN_CURRENT_CANDIDATE",
+  "hostDiscovery": "NOT_RUN_CURRENT_CANDIDATE",
+  "modelDispatch": "NOT_RUN_CURRENT_CANDIDATE",
+  "creativeAcceptance": "NOT_RUN_CURRENT_CANDIDATE",
   "published": false,
   "tasks": {
-    "complete": 22,
-    "total": 26,
+    "scope": "archived base plus three active extensions",
+    "complete": 29,
+    "total": 38,
     "remaining": [
-      "P-4.3",
-      "P-5.2",
-      "P-5.3",
-      "P-5.4"
+      "extend-lightcraft-connect-mcp-plugin:1.1",
+      "extend-lightcraft-connect-mcp-plugin:1.2",
+      "extend-lightcraft-connect-mcp-plugin:1.3",
+      "extend-lightcraft-connect-mcp-plugin:1.4",
+      "extend-lightcraft-expanded-photo-capabilities-plugin:1.3",
+      "extend-lightcraft-expanded-photo-capabilities-plugin:1.4",
+      "extend-lightcraft-portable-artcraft-delivery-plugin:1.1",
+      "extend-lightcraft-portable-artcraft-delivery-plugin:1.3",
+      "extend-lightcraft-portable-artcraft-delivery-plugin:1.4"
     ]
   },
-  "evidence": "docs/verification/local-report.json",
-  "remoteCI": "PASS_OFFLINE_PYTHON_311_312_313",
+  "evidence": "docs/verification/windows-20261008/local-report.json",
+  "remoteCI": "NOT_RUN_FINAL_EVIDENCE_COMMIT",
   "repository": "https://github.com/full-aigc-plugins/lightcraft-plugin",
   "branch": "main",
   "releaseStatus": "DEVELOPMENT_DRAFT_AWAITING_ACCEPTANCE",
-  "remoteCIEvidence": "docs/verification/remote-ci.json"
+  "remoteCIEvidence": "docs/verification/windows-20261008/plugin-previous-offline-ci.json",
+  "publicRelease": "v0.1.0-dev.2",
+  "baseTasks": {
+    "change": "harden-lightcraft-plugin-delivery",
+    "complete": 26,
+    "total": 26,
+    "status": "ARCHIVED"
+  },
+  "extensionTasks": {
+    "complete": 3,
+    "total": 12
+  }
 }

@@ -19,3 +19,7 @@
 技能源已新增 Linux aarch64/x86_64 官方制品锁与安全 tar 安装适配，并增加原生目标 CI；已完成 Linux arm64 容器的两图导入/显影/六产物解码及第二会话重开。macOS Developer ID 签名本机校验通过；本机 Intel 执行因缺少 Rosetta 未通过。其他目标 CI 结果和 Windows、插件受管来源配套仍独立核验，不能用来源候选的平台结果关闭插件或全平台任务。证据：`docs/verification/platform-20261008/README.md`。
 
 四目标原生 CI 与下载产物复核通过：Linux aarch64/x86_64、macOS arm64/x86_64，代码身份 `44503e2`，见 `docs/verification/platform-20261008/ci-artifact-verification.json`。Windows 及插件受管来源配套仍缺失，1.1 继续 OPEN。
+
+## 2026-10-08 来源六目标证据
+
+技能源 SEXT3-1 已完成，六目标运行资源身份、签名/依赖、30 会话及 36 产物复核通过，见 `docs/verification/windows-20261008/README.md`。本插件受管来源仍为公开 v0.1.0-dev.1，未复制候选运行资源；本插件 1.1/1.4 继续 OPEN，不用来源候选结果替代插件验收。
