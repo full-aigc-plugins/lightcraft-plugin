@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T12:35:38.219829+00:00",
+  "generatedAt": "2026-10-08T12:37:28.390472+00:00",
   "sourceFingerprint": "576bd22ab7b4f815458e1cafb5c410a6ba2c540e6746ebea8e4e23406243ca1e",
   "project": "lightcraft-plugin",
   "developmentVersion": "0.1.0-dev.1",
@@ -103,8 +103,12 @@
       "scope": "macOS arm64 only; other platforms independent OPEN changes"
     },
     "remoteCI": {
-      "status": "NOT_RUN",
-      "reason": "release CLI/workflow changed; awaiting current CI"
+      "status": "PASS",
+      "evidence": [
+        "docs/verification/remote-ci.json"
+      ],
+      "testedCommit": "0d5207d1e6b2ef290012f57696ef3c3e2925702e",
+      "scope": "Python 3.11/3.12/3.13 offline contracts including real local Git tag/blob fixtures; candidate checkout branch only, official published checkout not run"
     }
   },
   "python311": "NOT_RUN_UNAVAILABLE_LOCALLY",
