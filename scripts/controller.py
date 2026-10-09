@@ -16,7 +16,7 @@ def read(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver','session-inspect','raw-inspect','sam-inspect','craft-inspect'])
+    parser.add_argument('action',choices=['init','status','inspect','run','reconcile','stop','remaining','review-request','review','revise','deliver','session-inspect','raw-inspect','sam-inspect','craft-inspect','mobile-prepare','mobile-inspect'])
     parser.add_argument('task',type=Path)
     parser.add_argument('--payload',type=Path)
     parser.add_argument('--runtime-home',type=Path)
@@ -24,7 +24,17 @@ def main():
     try:
         payload=read(args.payload) if args.payload else {}
         action=args.action
-        if action=='craft-inspect':
+        if action in ('mobile-prepare','mobile-inspect'):
+            source=Path(__file__).with_name('mobile_delivery.py')
+            mobile_spec=importlib.util.spec_from_file_location('mobile_delivery',source)
+            mobile=importlib.util.module_from_spec(mobile_spec);mobile_spec.loader.exec_module(mobile)
+            if action=='mobile-prepare':
+                if set(payload)!={'report','report_sha256'}:raise ValueError('explicit_mobile_source_required')
+                result=mobile.prepare(args.task,**payload)
+            else:
+                if payload:raise ValueError('mobile_inspect_has_no_write_payload')
+                result=mobile.inspect(args.task)
+        elif action=='craft-inspect':
             native=subprocess.run(['node',str(Path(__file__).with_name('craft_exchange.ts')),str(args.task)],capture_output=True,text=True)
             if native.returncode:raise ValueError('craft_inspection_failed: '+native.stdout.strip()+native.stderr.strip())
             result=core.module('command_gateway').strict_json(native.stdout)
