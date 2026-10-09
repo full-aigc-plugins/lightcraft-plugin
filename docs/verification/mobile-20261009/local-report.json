@@ -45,9 +45,11 @@
       "evidence": []
     },
     "remoteCI": {
-      "status": "NOT_RUN",
-      "evidence": [],
-      "scope": "current changed controller/helper/workflow awaits exact-head CI; old run is not current proof"
+      "status": "PASS",
+      "evidence": [
+        "offline-ci.json"
+      ],
+      "scope": "current controller/helper/workflow commit 25df290; subsequent evidence-only commit leaves tested implementation unchanged"
     },
     "mobile": {
       "status": "PASS",

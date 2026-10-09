@@ -28,11 +28,11 @@
     ]
   },
   "evidence": "docs/verification/mobile-20261009/local-report.json",
-  "remoteCI": "NOT_RUN_CURRENT_CONTROLLER_CHANGE",
+  "remoteCI": "PASS_OFFLINE_PYTHON_311_312_313_NODE24",
   "repository": "https://github.com/full-aigc-plugins/lightcraft-plugin",
   "branch": "main",
   "releaseStatus": "DEVELOPMENT_DRAFT_AWAITING_ACCEPTANCE",
-  "remoteCIEvidence": "docs/verification/windows-20261008/plugin-offline-ci.json",
+  "remoteCIEvidence": "docs/verification/mobile-20261009/offline-ci.json",
   "publicRelease": "v0.1.0-dev.2",
   "baseTasks": {
     "change": "harden-lightcraft-plugin-delivery",
