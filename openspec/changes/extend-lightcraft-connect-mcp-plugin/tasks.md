@@ -13,3 +13,7 @@
 ## 2026-10-09 MCP 与原生故障验收进展（任务继续 OPEN）
 
 当前 Codex 0.161.0 隔离宿主实际加载手工配置的只读原生 MCP，目录仅两个查询工具，实际空库查询通过；固定 CLI 0.2.1 headless 中真实 journal 权限故障、APPLIED_NOT_SAVED 分类、保存队列恢复与独立重开通过。证据：`docs/verification/current-mcp-20261009/README.md`。不替代桌面 Connect、桌面 NotSaved、失联/重启恢复或插件 manifest 自动注册；未勾选任务、未同步归档。
+
+## 2026-10-09 配套技能源桌面证据（插件任务仍 OPEN）
+
+技能源实际 CLI 0.2.1 + 桌面 0.4.0 的 Connect/占库/超时/NotSaved/恢复验收通过；插件当前受管快照实际拒绝其不同运行锁回执，没有更改 108 文件或伪造来源。证据：`docs/verification/installed-desktop-20261009/README.md`。不把来源通过当成插件通过，全部四项继续 OPEN。

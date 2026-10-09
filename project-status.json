@@ -50,5 +50,8 @@
   "rawVisualDeliveryGuard": "PASS_REJECTED_ACTUAL_FAILED_CANDIDATE",
   "rawVisualDeliveryEvidence": "docs/verification/raw-review-20261009/README.md",
   "mobileAcceptance": "PASS_ANDROID_PHONE_FILE_IDENTITY_PNG_PDF_TABLET_OPEN",
-  "mobileEvidence": "docs/verification/mobile-20261009/README.md"
+  "mobileEvidence": "docs/verification/mobile-20261009/README.md",
+  "desktopAcceptance": "SOURCE_DESKTOP_PROOF_ONLY_PLUGIN_LOCK_MISMATCH",
+  "desktopEvidence": "docs/verification/installed-desktop-20261009/README.md",
+  "samDesktopStatus": "AVAILABLE_MODEL_NOT_INSTALLED_NO_INFERENCE"
 }
