@@ -1,0 +1,27 @@
+{
+  "name": "lightcraft",
+  "displayName": "Lightcraft",
+  "displayName_i18n": {
+    "en": "Lightcraft",
+    "zh-CN": "Lightcraft"
+  },
+  "version": "0.1.0-dev.3",
+  "description": "Lightcraft 照片管理与无损显影；CLI 0.2.1/macOS arm64 开发预发行，扩展能力未启用。",
+  "description_i18n": {
+    "en": "Lightcraft photo management and non-destructive development; CLI 0.2.1 on macOS arm64 as a development pre-release, extensions not enabled.",
+    "zh-CN": "Lightcraft 照片管理与无损显影；CLI 0.2.1/macOS arm64 开发预发行，扩展能力未启用。"
+  },
+  "author": {
+    "name": "Full AIGC Plugins",
+    "url": "https://github.com/full-aigc-plugins"
+  },
+  "homepage": "https://github.com/full-aigc-plugins/lightcraft-plugin",
+  "repository": "https://github.com/full-aigc-plugins/lightcraft-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "lightcraft",
+    "photo-management",
+    "development-release"
+  ],
+  "skills": "skills"
+}
