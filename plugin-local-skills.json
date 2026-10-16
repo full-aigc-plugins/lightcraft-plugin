@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "dest": "skills/",
+  "skills": [
+    "lightcraft-batch-photo-style",
+    "lightcraft-editor",
+    "lightcraft-landscape-develop",
+    "lightcraft-photo-culling",
+    "lightcraft-photo-export",
+    "lightcraft-portrait-develop",
+    "lightcraft-raw-develop"
+  ]
+}

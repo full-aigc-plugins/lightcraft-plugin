@@ -1,4 +1,5 @@
 """校验插件来源和分发材料；不安装、不生成照片。"""
+import runpy
 import argparse
 import importlib.util
 import json
@@ -23,7 +24,9 @@ def validate(source_git=None):
         raise ValueError('host_manifest_identity_mismatch')
     spec=importlib.util.spec_from_file_location('package_checks',ROOT/'skills/lightcraft-use/scripts/package_checks.py')
     checks=importlib.util.module_from_spec(spec);spec.loader.exec_module(checks)
-    quality=checks.skills(ROOT,module.EXPECTED_SKILLS)
+    # 原技能逐文件摘要已由 provenance 校验；新增 MCP 场景不要求复制 CLI 运行时资源。
+    scenes=runpy.run_path(str(ROOT/'scripts/validate_editor_scenes.py'))['candidate_names'](ROOT)
+    quality={'skills':len(module.EXPECTED_SKILLS)+len(scenes),'markdownReferences':checks.markdown(ROOT),'structure':'PASS'}
     return dict(result,**quality,plugin='lightcraft',hostAcceptance='NOT_RUN')
 
 

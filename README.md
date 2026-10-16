@@ -1,4 +1,4 @@
-# Lightcraft 插件
+# LightCraft Use
 
 待发布开发预发行 `0.1.0-dev.3`，包含技能库六项技能的受摘要保护快照。`candidate-source.json` 锁定已公开来源 v0.1.0-dev.1 / 87fe7ce；`source-suite.json` 记录来源版本，原生版本独立为 `0.2.1`。插件运行不需要来源仓库。
 
@@ -29,3 +29,13 @@ SAM 当前只读评估与未完成门禁见 [验收记录](docs/verification/sam
 三领域协议消费与失效规则已验证，宿主自动调度仍未验收，见 [实际证据](docs/verification/exchange-20261008/README.md)。
 
 当前候选隔离宿主五类场景通过；Nikon RAW 视觉复核发现明显偏色，公开发布门禁保持开放，见 [当前宿主及视觉证据](docs/verification/current-host-20261008/README.md)。宿主 MCP 与桌面验收尚未完成。
+
+## 场景技能开发候选
+
+已增加 6 个领域场景技能及 1 个内嵌编辑器入口。详见 [场景目录](docs/scene-skills.md)。本地未发布候选，不代表全部场景的创作质量已验收。
+
+## 内嵌编辑器候选
+
+新增 MCP Apps 与宿主浏览器接入，详见 [配置与构建](docs/editor-integration.md)。`ui/dist/` 为本地生成物；首次分发须带齐生成物。
+
+Plugin display name: **LightCraft Use**. Official upstream icon provenance and licenses are included under `assets/official-icon-source.json` and adjacent LICENSE files.
