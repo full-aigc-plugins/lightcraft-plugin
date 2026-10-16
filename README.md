@@ -39,3 +39,7 @@ SAM 当前只读评估与未完成门禁见 [验收记录](docs/verification/sam
 新增 MCP Apps 与宿主浏览器接入，详见 [配置与构建](docs/editor-integration.md)。`ui/dist/` 为本地生成物；首次分发须带齐生成物。
 
 Plugin display name: **LightCraft Use**. Official upstream icon provenance and licenses are included under `assets/official-icon-source.json` and adjacent LICENSE files.
+
+## 场景操作手册
+
+新增8条带具体命令、参数和效果检查的流程，见 [lightcraft-scenario-playbooks](skills/lightcraft-scenario-playbooks/SKILL.md)。输入坐标与时长须现场重算，原生技术验证与真实素材效果状态独立记录。
