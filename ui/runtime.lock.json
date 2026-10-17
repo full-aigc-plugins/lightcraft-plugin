@@ -1,6 +1,6 @@
 {
   "name": "lightcraft",
-  "version": "0.1.0-dev.20261017.2",
+  "version": "0.1.0-dev.20261017.3",
   "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/releases/download/v0.1.0-dev.20261017.2/lightcraft-runtime.tgz",
   "sha256": "8463730ff5106ef9135ba9f01f514df2741898b2384d6eee6683b1d908531df3",
   "files": {
@@ -139,5 +139,6 @@
     "web-panel.js": "495fe361aaf5cf0d4ebd7a7a05dad8bad3b7126445c4bd352ccbcef724f8acaf",
     "web-panel.js.LEGAL.txt": "eda25878a01ef5903efe932a6e7c99e175023a47ce70b7d7f901ab2c07c06562"
   },
-  "scope": "Pinned editor artifact; bundled upstream/build provenance remains in editor/BUILD.json or config.json. This does not certify all upstream main capabilities."
+  "scope": "Pinned editor artifact; bundled upstream/build provenance remains in editor/BUILD.json or config.json. This does not certify all upstream main capabilities.",
+  "catalogSha256": "eafd9a91140e12ede4866ac65a7e8097e2bdf49e28c4667389b16da1661cfda3"
 }
