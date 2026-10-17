@@ -1,4 +1,5 @@
 """候选/发行来源验证；上游技能与本地扩展分别登记。"""
+import runpy
 import hashlib
 import json
 from pathlib import Path
@@ -33,9 +34,11 @@ def validate(root, source_git=None):
         raise ValueError('source_identity_mismatch')
     names = sorted(p.name for p in (root / 'skills').iterdir() if p.is_dir())
     local = json.loads((root / 'local-components.json').read_text())
-    if local.get('skills') != [] or names != EXPECTED_SKILLS:
+    scenes = runpy.run_path(str(root/'scripts/validate_editor_scenes.py'))['candidate_names'](root)
+    if local.get('skills') != [] or set(names) != set(EXPECTED_SKILLS) | scenes:
         raise ValueError('skill_set_mismatch')
-    if inventory(root / 'skills') != lock.get('skillFileSha256'):
+    managed = {p:d for p,d in inventory(root/'skills').items() if p.split('/')[0] in EXPECTED_SKILLS}
+    if managed != lock.get('skillFileSha256'):
         raise ValueError('snapshot_drift')
     if lock.get('sourceStatus') == 'local-unpublished-candidate':
         if lock.get('releaseTag') is not None or lock.get('commit') is not None:

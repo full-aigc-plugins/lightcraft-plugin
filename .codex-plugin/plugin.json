@@ -1,6 +1,12 @@
 {
   "name": "lightcraft",
-  "version": "0.1.0-dev.3",
+  "version": "0.1.0-dev.20261017.3",
   "description": "Lightcraft 照片管理与无损显影；CLI 0.2.1/macOS arm64 开发预发行，扩展能力未启用。",
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "mcpServers": "./.codex-plugin/mcp.json",
+  "interface": {
+    "displayName": "LightCraft Use",
+    "logo": "./assets/official-logo.png",
+    "logoDark": "./assets/official-logo.png"
+  }
 }
