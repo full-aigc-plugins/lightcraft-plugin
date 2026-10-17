@@ -8,27 +8,27 @@
     },
     {
       "name": "lightcraft-raw-develop",
-      "sha256": "59ba551e179c7f87b4dd5ce63e5005c4ef8311050690dc8e334f9de1eeb3f6ce"
+      "sha256": "f592d75f4822f9ad8975eecb4568b65184f458c6707e55dc0b4aff5fdcf73718"
     },
     {
       "name": "lightcraft-batch-photo-style",
-      "sha256": "356f46db5c01bba80edc158eb04a0f1e5c191ad17cd565305b69bc7b2b890d2e"
+      "sha256": "a499a2451bc3e17997ce5f63cbb96ef6403ef8f97d547d31af3d43a3be719b54"
     },
     {
       "name": "lightcraft-landscape-develop",
-      "sha256": "99d0274dcc9491e3222770bed364a4e3b98b8717e516d84d62bfe80d78fe1384"
+      "sha256": "25e1fc26391b406818e7836c8a8bcb4d8708eb0acb21ee7c83dcec91f1c5faa4"
     },
     {
       "name": "lightcraft-photo-culling",
-      "sha256": "1c91fd17629cf9d5d29497a26a78ab838620edfb231c437743988fffa5ffd76d"
+      "sha256": "87e1d669854895ef1a7e3ec056d218589cb0b61fcbadb52877ab104c999cd12d"
     },
     {
       "name": "lightcraft-portrait-develop",
-      "sha256": "22dc1aae0e8d684ed3247352bb21cdd7c9cbbebca8c2fb849b22d7ce743fcb8a"
+      "sha256": "8075044b36bcc71ab125537ad3609c81c7b47e8ef50cdd8f4c8676d500d36091"
     },
     {
       "name": "lightcraft-photo-export",
-      "sha256": "0c93c0ff1e4bc0c567ad2466cc434f979fe629772e939d5127b172a933155770"
+      "sha256": "e59bf24d95558aef14b6ff47ea74357ff4d2d456788c79f09c0577bb3136faa5"
     }
   ]
 }
