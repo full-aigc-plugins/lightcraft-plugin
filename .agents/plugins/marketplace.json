@@ -21,7 +21,7 @@
       "interface": {
         "displayName": "LightCraft Use",
         "shortDescription": "Photo management and non-destructive development",
-        "logo": "https://cdn.jsdelivr.net/gh/full-aigc-plugins/lightcraft-plugin@v0.1.0-dev.20261017.5/assets/official-logo.png"
+        "logo": "https://cdn.jsdelivr.net/gh/full-aigc-plugins/lightcraft-plugin@v0.1.0-dev.20261018.1/assets/official-logo.png"
       },
       "icon": "https://cdn.jsdelivr.net/gh/full-aigc-plugins/lightcraft-plugin@v0.1.0-dev.20261018.1/assets/official-logo.png"
     }
