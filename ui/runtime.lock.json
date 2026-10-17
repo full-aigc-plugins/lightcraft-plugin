@@ -1,8 +1,8 @@
 {
   "name": "lightcraft",
-  "version": "0.1.0-dev.20261017.1",
-  "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/releases/download/v0.1.0-dev.20261017.1/lightcraft-runtime.tgz",
-  "sha256": "cf0c9f572d4ff72da64f2c8b83ca192ee26e78c4e9fad3a12ded626b7632b451",
+  "version": "0.1.0-dev.20261017.2",
+  "url": "https://github.com/full-aigc-plugins/lightcraft-plugin/releases/download/v0.1.0-dev.20261017.2/lightcraft-runtime.tgz",
+  "sha256": "8463730ff5106ef9135ba9f01f514df2741898b2384d6eee6683b1d908531df3",
   "files": {
     "adapter.mjs": "1acfec1adfb5a95913c61322ff3ae67c7544b657759be9a6c12eada8fed79ef7",
     "config.json": "c20fdc5dba90126bd97d5eaec2fdafd8b1444727e4603028bf05d508b4c0e70e",
