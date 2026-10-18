@@ -1,85 +1,191 @@
 # LightCraft Use
 
-本轮开发预发布：`0.1.0-dev.20261018.2`。补齐官方输入框图标，Codex市场使用完整薄包快照以在安装前读取列表图标；运行资源沿用已核验的dev.20261017.2，不代表上游引擎升级或全部创作验收通过。
+## Plugin marketplaces
 
-## Installable editor development candidate
+This plugin belongs to **AIGC content creation**.
 
-`0.1.0-dev.20261017.3` is distributed through the Full AIGC plugin marketplace as a development prerelease. Node.js 24 is required. Git installations use `ui/bootstrap.mjs` to download and verify the pinned editor archive on first start; complete release ZIPs also include that archive unpacked for offline startup. No Rust build or npm installation is required. Startup diagnostics use stderr; stdio remains MCP-only. The editor shares its session with Agent commands. Full creative quality and all-host embedded UI acceptance are still incomplete. Existing dated validation below describes its original version.
+| Category | Marketplace | Purpose |
+| --- | --- | --- |
+| Full-stack development | [Full Stack Plugins](https://github.com/partme-ai/full-stack-plugins) | Architecture and UI design, code understanding, quality checks, code review, workflow governance, and server operations |
+| AIGC content creation | [Full AIGC Plugins](https://github.com/partme-ai/full-aigc-plugins) | Image, video, audio, music, 3D, and multimodal content creation |
 
+![LightCraft Use — photo management and non-destructive development](assets/official-logo.png)
 
-## Previous development candidate
+> Cull, develop and export photographs from your agent host, with the original file preserved and every develop step kept as a reversible setting.
 
-`0.1.0-dev.20261017.1` is distributed through the Full AIGC plugin marketplace as a development prerelease. Node.js 24 is required. Git installations use `ui/bootstrap.mjs` to download and verify the pinned editor archive on first start; complete release ZIPs also include that archive unpacked for offline startup. No Rust build or npm installation is required. Startup diagnostics use stderr; stdio remains MCP-only. The editor shares its session with Agent commands. Full creative quality and all-host embedded UI acceptance are still incomplete. Existing dated validation below describes its original version.
+[![Version](https://img.shields.io/badge/release-0.1.0--dev.20261018.3-1A73E8)](https://github.com/full-aigc-plugins/lightcraft-plugin/releases)
+[![Skills](https://img.shields.io/badge/skills-17-00A67E)](#skills)
+[![MCP tools](https://img.shields.io/badge/MCP%20tools-14-00A67E)](#mcp-tools)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
+[English](README.md) | [简体中文](README.zh-CN.md) · [Install](#installation) · [Quick start](#quick-start) · [Skills](#skills) · [Troubleshooting](#troubleshooting)
 
-待发布开发预发行 `0.1.0-dev.3`，包含技能库六项技能的受摘要保护快照。`candidate-source.json` 锁定已公开来源 v0.1.0-dev.1 / 87fe7ce；`source-suite.json` 记录来源版本，原生版本独立为 `0.2.1`。插件运行不需要来源仓库。
+## Positioning
 
-已实现持久任务锁、原子状态、只读核对、停止请求、明确剩余步骤建议、有界修订、绑定目标/原片/候选/设置的审阅，以及独立重开交付门禁。`.codex-plugin/plugin.json` 是最小接入清单；不添加自动 hooks。来源升级默认只预检，拒绝快照漂移或用户修改。
+`lightcraft` drives the real LightCraft CLI and its browser panel from an agent host, so a photo task ends with decoded output files, a versioned develop history and a delivery receipt — not a promise that a slider moved. The plugin owns photo skills, an explicit task controller and a same-session panel bridge; it does not replace LightCraft or re-implement raw decoding.
+
+| Property | Value |
+| :--- | :--- |
+| Plugin ID | `lightcraft` |
+| Version | `0.1.0-dev.20261018.3` |
+| Status | Development preview; production promotion blocked, creative acceptance open |
+| Pinned native CLI | LightCraft CLI `0.2.1` |
+| Verified platform | macOS arm64 with Python 3.11 or newer |
+| Panel runtime | Node.js 24, started from `ui/bootstrap.mjs` |
+| License | Apache-2.0 |
+
+## Installation
+
+### Prerequisites
+
+- Node.js 24 on `PATH` for the stdio MCP server and the panel.
+- Python 3.11 or newer; the skills and `scripts/controller.py` are Python entry points.
+- macOS arm64 for the pinned CLI. Other platforms are tracked as independent open changes and are not claimed.
+- Network access on the first panel launch; the plugin downloads and verifies the pinned editor archive, and a complete release ZIP already contains it.
+- The native CLI is not bundled. The installer downloads the pinned official release and keeps the licence files inside the artifact.
+
+### From the plugin marketplace
 
 ```bash
-python3 -I -B scripts/validate_package.py --source-git /path/to/lightcraft-skills
-python3 -I -B -m unittest discover -s tests -v
-python3 -I -B scripts/controller.py --help
+codex plugin marketplace add partme-ai/full-aigc-plugins
+codex plugin add lightcraft@full-aigc-plugins
 ```
 
-控制器通过 `init/run/status/inspect/reconcile/stop/remaining/review-request/review/revise/deliver` 显式调用。run 可能触发原生安装；只在已有授权内执行。inspect/reconcile 不启动原生程序，UNKNOWN 不重放。
+Restart the host, open a new task, and ask LightCraft to inspect a photo library before editing anything.
 
-输入 JSON、恢复与审阅交接见 [控制器操作契约](docs/controller.zh-CN.md)。
+### Other host manifests
 
-主 OpenSpec 任务 **26/26** 完成，主变更适用验收与公开开发预发行已完成。已通过宿主安装/发现、缓存控制器原生闭环与合成图视觉审阅；Codex 0.161.0 六技能隔离环境的五类宿主场景已通过，全量技能环境仍有上下文预算限制；Git main 已推送，Python 3.11/3.12/3.13 远端离线 CI 全部通过；插件开发预发行 v0.1.0-dev.2 已公开，锁定技能库 v0.1.0-dev.1。三个 P3 独立扩展变更保持 OPEN。
+| Host | Manifest | Path base |
+| --- | --- | --- |
+| Standard Agent Plugins 1.0.0 | `plugin.json`, `mcp.json` | `${PLUGIN_ROOT}` |
+| Codex | `.codex-plugin/plugin.json`, `.codex-plugin/mcp.json` | plugin root relative to `cwd` |
+| Claude Code | `.claude-plugin/plugin.json`, `.mcp.json` | `${CLAUDE_PLUGIN_ROOT}` |
 
-[任务与规格](openspec/README.md) · [当前证据及差距](docs/verification/implementation-evidence.md) · [公开预发行历史报告](docs/verification/local-report.json) · [架构](docs/architecture.md) · [回执与来源同步](docs/task-receipts.zh-CN.md)
+Kimi (`kimi.plugin.json`), DeepSeek Harness (`dsh/`) and the WorkBuddy example (`hosts/workbuddy/mcp.json`) are also present. In a development checkout you must build the editor assets first; cloning the source is not an installed runtime.
 
-Connect/MCP 增量正在验收，见 [当前增量证据](docs/verification/connect-mcp-20261008/README.md)。上述公开预发行与宿主通过记录绑定历史源码，不能证明本次增量已完成宿主或桌面验收。三个独立扩展继续保持 OPEN。
+## Quick start
 
-批量范围与选择性修订增量已完成实际三照片验收，见 [批量证据](docs/verification/batch-20261008/README.md)。扩展变更尚未整体完成，当前发布草稿的旧目标提交不会自动包含此增量。
+```mermaid
+flowchart LR
+    A[Install plugin] --> B[Open editor on a workspace]
+    B --> C[command_list / list_files]
+    C --> D[Import and inspect photos]
+    D --> E[Develop with photo IDs]
+    E --> F[Export and decode the result]
+    F --> G[Reopen and review]
+```
 
-逐样本 RAW 身份与结果分层已完成当前原生验收，见 [RAW 证据](docs/verification/raw-20261008/README.md)。完整解码、预览回退和不支持分别记录，仅适用于所测摘要与相机变体。
+1. Open the panel with an explicit `workspace` argument.
+2. Check the environment first: `python3 -I -B "$SKILL_DIR/scripts/bootstrap.py" --no-install` reports the pinned CLI without installing it.
+3. List the real commands with `command_list`, then read a photo with `inspect` before changing it.
+4. Develop with `command_run`, always binding real photo IDs; never assume a setting object from memory.
+5. Export, then decode the actual output file and reopen the library in an independent session before calling the task done.
 
-SAM 当前只读评估与未完成门禁见 [验收记录](docs/verification/sam-20261008/README.md)。
+For a long task, the explicit controller records state instead of relying on the chat:
 
-三领域协议消费与失效规则已验证，宿主自动调度仍未验收，见 [实际证据](docs/verification/exchange-20261008/README.md)。
+```bash
+python3 -I -B scripts/controller.py init /absolute/new-task --payload /absolute/init.json
+python3 -I -B scripts/controller.py run /absolute/new-task --runtime-home /absolute/runtime
+python3 -I -B scripts/controller.py status /absolute/new-task
+python3 -I -B scripts/controller.py deliver /absolute/new-task
+```
 
-当前候选隔离宿主五类场景通过；Nikon RAW 视觉复核发现明显偏色，公开发布门禁保持开放，见 [当前宿主及视觉证据](docs/verification/current-host-20261008/README.md)。宿主 MCP 与桌面验收尚未完成。
+`init`, `run`, `status`, `inspect`, `reconcile`, `stop`, `remaining`, `review-request`, `review`, `revise` and `deliver` are separate calls. `UNKNOWN` is never replayed; `reconcile` only reads.
 
-## 场景技能开发候选
+## What you can build
 
-已增加 6 个领域场景技能及 1 个内嵌编辑器入口。详见 [场景目录](docs/scene-skills.md)。本地未发布候选，不代表全部场景的创作质量已验收。
+| Workflow | Built-in path | Verifiable output |
+| :--- | :--- | :--- |
+| RAW baseline development | `lightcraft-raw-develop` | White balance, exposure, highlight and shadow settings, plus decoded output |
+| Batch style across one shoot | `lightcraft-batch-photo-style` | The same look applied to the listed photos only |
+| Landscape development | `lightcraft-landscape-develop` | Sky, ground and tonal separation recovered |
+| Natural portrait development | `lightcraft-portrait-develop` | Skin, exposure and background balance |
+| Cull and rate a library | `lightcraft-photo-culling` | Rating, grouping and a selected set |
+| Final delivery | `lightcraft-photo-export` | Sized, colour-managed, named files with a receipt |
+| Independent virtual copy | `lightcraft-virtual-copy-review` | A reviewable copy that leaves the original untouched |
+| Named version restore | `lightcraft-named-version-restore` | Restored settings and pixels identical to the named version |
+| Tone curve transfer | `lightcraft-tone-curve-transfer` | Only the curve moved; exposure, colour and crop preserved |
 
-## 内嵌编辑器候选
+## Skills
 
-新增 MCP Apps 与宿主浏览器接入，详见 [配置与构建](docs/editor-integration.md)。`ui/dist/` 为本地生成物；首次分发须带齐生成物。
+| Skill | What it does |
+| :--- | :--- |
+| `lightcraft-use` | Main entry: route a photo request and connect the stages |
+| `lightcraft-editor` | Open the editor in the host and keep agent edits on the same page |
+| `lightcraft-cli` | Command catalogue, control list, JSON plan check and receipt contract |
+| `lightcraft-cli-setup` | Check or install the pinned CLI, verify the version and diagnose failures |
+| `lightcraft-cli-library` | Import, select and organise photos; diagnose duplicate imports |
+| `lightcraft-cli-develop` | Exposure, white balance, local adjustments and scoped sync |
+| `lightcraft-cli-export` | Export photos, check format, size and colour, verify delivered files |
+| `lightcraft-raw-develop` | RAW baseline: white balance, exposure, highlight and shadow |
+| `lightcraft-batch-photo-style` | Unify the look across one group of photos |
+| `lightcraft-landscape-develop` | Sky, ground and tonal range for landscape frames |
+| `lightcraft-portrait-develop` | Skin tone, exposure and background balance |
+| `lightcraft-photo-culling` | Import, rate, group and select |
+| `lightcraft-photo-export` | Size, colour and naming for the selected photos |
+| `lightcraft-virtual-copy-review` | Review in an independent virtual copy without touching the original |
+| `lightcraft-named-version-restore` | Trial a named version and restore it exactly |
+| `lightcraft-tone-curve-transfer` | Migrate only the tone curve, keeping per-photo exposure and crop |
+| `lightcraft-scenario-playbooks` | Highlight cleanup, black-and-white, square crop, grey-card balance, watermark review, dual-format export, contact sheet and masked fallback |
 
-Plugin display name: **LightCraft Use**. Official upstream icon provenance and licenses are included under `assets/official-icon-source.json` and adjacent LICENSE files.
+Skills are generated from the independent `lightcraft-skills` runtime and consumed here as digest-protected snapshots; `candidate-source.json` pins the published source, and `source-suite.json` records the separate native version.
 
-## 场景操作手册
+## MCP tools
 
-新增8条带具体命令、参数和效果检查的流程，见 [lightcraft-scenario-playbooks](skills/lightcraft-scenario-playbooks/SKILL.md)。输入坐标与时长须现场重算，原生技术验证与真实素材效果状态独立记录。
+One bundled server, `lightcraft-editor`, speaking **stdio**. The local HTTP listener only serves the panel and its same-session bridge. The catalogue exposes 14 tools: 11 agent-callable tools and 3 `_panel_*` bridge tools the panel uses internally.
 
-## main新流程候选
+| Family | Tools | Purpose |
+| :--- | :--- | :--- |
+| Session | `open_editor`, `open_browser_editor`, `editor_status` | Open the panel and confirm that it attached |
+| Command gateway | `command_list`, `command_run` | Discover real commands and run one with JSON params |
+| Inspection | `inspect` | Inspect the visible editor or the LightCraft library |
+| Library | `list_files`, `open_file` | List files held by the browser editor; import a workspace-relative file into it |
+| Delivery | `save_file`, `save_project`, `screenshot` | Copy a browser file or project to a new workspace path; capture the canvas |
 
-新增[联系印样、局部蒙版模板与幻灯片导出指导](skills/lightcraft-scenario-playbooks/references/main-workflows.md)，并提供固定main完整参数入口，覆盖新增58个方法。新流程尚未业务验收，Web能力逐项检查，不据目录推断通过。
+`save_project` does not apply to the browser photo library: the library lives in page storage, so export a backup through the `file.backupLibrary` command instead.
 
-## 六项核心显影场景回归
+## Configuration
 
-选片、批量风格、人像整体曝光、风景拉直、照片交付、RAW基础显影六项指导已明确照片ID、选择与设置组边界；原8条手册加6条核心，共14条通过Windows限定技术回归。固定Nikon D2H NEF的运行时报告为完整RAW，导出与嵌入预览已查看；不推广到其他相机/变体，也不构成独立解码或色彩校准。EXIF GPS移除有保留对照，同名交付保护已验证。此处绑定官方0.8/main，不替代以上旧CLI 0.2.1、旧发行或宿主资格；创作效果与宿主同步仍开放。
+| Setting | Where | Effect |
+| :--- | :--- | :--- |
+| `workspace` argument | `open_editor` / `open_browser_editor` | Binds the task folder; paths outside it are refused |
+| `--runtime-home` | Harness CLI and controller | Isolate the pinned runtime cache |
+| `CRAFT_EDITOR_UPDATE=off` | stdio MCP `env` | Use the bundled panel only; no download attempt |
+| `CRAFT_EDITOR_CACHE_DIR` | Environment | Absolute directory for verified editor archives |
+| `LIGHTCRAFT_SOURCE_GIT` | CI and release preflight | Git checkout used to verify the locked skill source |
 
-### 候选启动修正
+Verified archives are cached under `~/.cache/full-aigc/editors`. An active session keeps its version until closed, and a corrupt cache falls back to the bundled build.
 
-本候选先完成轻量MCP握手及能力发现，在首次工具或资源调用时校验/获取固定编辑器资源。修复多个编辑器首次下载阻塞宿主握手的问题。Windows通过Git安装时须启用Git长路径支持（`git config --global core.longpaths true`）；完整ZIP不包含历史验收记录，可避免Git检出长路径的问题。运行资源沿用已核验的dev.20261017.2制品，不以入口版本号冒充上游升级。
+## Architecture and security
 
-### Windows 启动兼容修正
+Agent ↔ plugin traffic is stdio MCP; the browser bridge listens on `127.0.0.1` only, with a random token and Host/Origin checks. Paths outside the workspace are rejected, downloads are SHA-256 verified, and the bundled panel is always kept as a fallback.
 
-规范化入口真实路径，能力清单校验统一使用 LF 换行，兼容 Windows Git CRLF 检出。
+Originals are treated as read-only inputs; edits are settings applied to a versioned history, and delivery requires a matching reopen receipt. The controller keeps a persistent task lock and atomic state, refuses to replay `UNKNOWN`, and bounds revisions. No credential is stored and no traffic reaches the authors. Details: [architecture](docs/architecture.md), [controller contract](docs/controller.zh-CN.md), [task receipts](docs/task-receipts.md), [implementation evidence](docs/verification/implementation-evidence.md).
 
-### 候选启动修正
+## Troubleshooting
 
-本候选先完成轻量MCP握手及能力发现，在首次工具或资源调用时校验/获取固定编辑器资源。修复多个编辑器首次下载阻塞宿主握手的问题。Windows通过Git安装时须启用Git长路径支持（`git config --global core.longpaths true`）；完整ZIP不包含历史验收记录，可避免Git检出长路径的问题。运行资源沿用已核验的dev.20261017.2制品，不以入口版本号冒充上游升级。
+| Symptom | Action |
+| :--- | :--- |
+| Panel tools are missing | Confirm the plugin is enabled, restart the host, open a new task |
+| The panel does not render inside the host | Use the URL from `open_browser_editor`; the terminal provides no browser panel |
+| The CLI is reported missing or wrong | Run the setup skill's `bootstrap.py --no-install` check; it never upgrades silently |
+| RAW colours look wrong after export | Review the actual decoded file in an independent session; Nikon RAW colour accuracy is still an open gate |
+| The photo library disappeared | The library lives in browser storage; restore from the `file.backupLibrary` export |
+| A run ends `UNKNOWN` | Reconcile read-only, then decide; never replay the step |
 
-## 独立副本、版本恢复与曲线迁移开发候选
+## Upgrade
 
-新增`lightcraft-virtual-copy-review`、`lightcraft-named-version-restore`、`lightcraft-tone-curve-transfer`，固定darktable手册GitHub提交并原创映射实际命令参数。官方0.8.0 macOS三场景27次CLI调用通过：副本独立编辑、命名版本恢复后的设置和像素一致、仅toneCurve组迁移且目标曝光/色彩/裁切保持，源文件与排除照片不变，新进程重开可继续。当前未发布新市场版本；Windows完整17场景116次CLI及输出摘要通过，真实Codex MCP/IAB的副本、恢复、曲线与页面重载验证通过。真实媒体质量、备份恢复UI和其他宿主仍未验收。
+```bash
+codex plugin marketplace upgrade full-aigc-plugins
+codex plugin add lightcraft@full-aigc-plugins
+```
 
-## 18.2发行标签修正
+The CLI, the editor archive and the skill snapshots are pinned separately; upgrading the plugin does not silently upgrade the native CLI.
 
-18.2对齐Git标签与完整ZIP的源码提交。旧18.1标签及制品保留并标记替代；技能和固定编辑器资源字节保持，此前媒体/宿主验收仍保留原版本与平台限定。本次补充标签、完整ZIP与实际安装核对。
+## Contributing and support
+
+Open issues at <https://github.com/full-aigc-plugins/lightcraft-plugin/issues>. Behaviour changes start in `openspec/changes/`, and a task is checked only after real acceptance. Read `AGENTS.md` and `docs/verification/implementation-evidence.md` before claiming a capability, and keep both languages aligned.
+
+## License
+
+Original repository content is [Apache-2.0](LICENSE). The icon is upstream LightCraft artwork under MIT OR Apache-2.0, recorded in `assets/official-icon-source.json`. The native CLI is not redistributed; its licence files ship inside the pinned artifact. Upstream LightCraft is a separate project at <https://github.com/storytold/lightcraft>.
