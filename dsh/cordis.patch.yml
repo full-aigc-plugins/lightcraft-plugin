@@ -8,7 +8,7 @@
 
     - id: mcp-lightcraft-lightcraft-editor
       name: '@deepseek-ai/dsh-mcp-client'
-      disabled: !!js "!process.env.DSH_MCP_LIGHTCRAFT"
+      disabled: !!js "process.env.DSH_MCP_LIGHTCRAFT === '0'"
       config:
         serverName: "lightcraft-editor"
         toolCallTimeoutMs: 60000
