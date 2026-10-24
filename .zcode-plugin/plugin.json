@@ -1,10 +1,10 @@
 {
   "name": "lightcraft",
   "version": "0.1.0-dev.20261018.2",
-  "description": "RAW develop, landscape and portrait looks, batch grading, tone-curve transfer and virtual-copy review. Edits stay non-destructive.",
+  "description": "RAW 基础显影、风光与人像、批量调色、曲线迁移与虚拟副本审稿；编辑保持非破坏。",
   "license": "Apache-2.0",
   "skills": "./skills/",
-  "displayName": "LightCraft · Photo Grading",
+  "displayName": "LightCraft（照片调色）",
   "icon": "./assets/official-logo.png",
   "mcpServers": {
     "lightcraft-editor": {
@@ -21,15 +21,15 @@
     }
   },
   "displayName_i18n": {
-    "en": "LightCraft · Photo Grading"
+    "zh-CN": "LightCraft（照片调色）"
   },
   "ui": {
     "surfaces": [
       {
         "id": "editor",
         "title": {
-          "en-US": "LightCraft · Photo Grading",
-          "zh-CN": "LightCraft · 照片调色"
+          "en-US": "LightCraft (Photo Grading)",
+          "zh-CN": "LightCraft（照片调色）"
         },
         "icon": "camera",
         "server": "lightcraft-editor",
