@@ -23,7 +23,11 @@
         "shortDescription": "RAW develop, batch grading and culling with non-destructive edits",
         "logo": "https://cdn.jsdelivr.net/gh/full-aigc-plugins/lightcraft-plugin@v0.1.0-dev.20261018.2/assets/official-logo.png"
       },
-      "icon": "https://cdn.jsdelivr.net/gh/full-aigc-plugins/lightcraft-plugin@v0.1.0-dev.20261018.2/assets/official-logo.png"
+      "icon": "https://cdn.jsdelivr.net/gh/full-aigc-plugins/lightcraft-plugin@v0.1.0-dev.20261018.2/assets/official-logo.png",
+      "line": "full-aigc",
+      "componentTypes": [
+        "ui"
+      ]
     }
   ]
 }
