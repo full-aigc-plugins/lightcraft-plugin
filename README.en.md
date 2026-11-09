@@ -2,7 +2,7 @@
 
 > RAW develop, batch grading and culling with non-destructive edits
 
-**Version**: 0.1.0-dev.20261018.3 · **License**: Apache-2.0 · **Skills**: 17 · **MCP server**: 1
+**Version**: 0.1.0-dev.20261018.4 · **License**: Apache-2.0 · **Skills**: 17 · **MCP server**: 1
 
 [简体中文](README.md) · [Install](#installation) · [Quick start](#quick-start) · [Project layout](#project-layout)
 
