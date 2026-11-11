@@ -1,13 +1,14 @@
 {
-  "name": "lightcraft-plugin",
-  "version": "0.1.0-dev.20261018.4",
+  "name": "lightcraft",
+  "version": "0.1.0-dev.20261111.1",
   "private": true,
   "type": "module",
   "main": "./dsh/lib/index.js",
   "dsh": {
     "bundle": {
-      "patch": "./cordis.patch.yml"
+      "patch": "./dsh/cordis.patch.yml"
     }
   },
-  "icon": "./dsh/icon.png"
+  "icon": "./dsh/icon.png",
+  "description": "Lightcraft 照片管理与无损显影；CLI 0.2.1/macOS arm64 开发预发行，扩展能力未启用。"
 }
